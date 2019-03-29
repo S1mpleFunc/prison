@@ -1,0 +1,4 @@
+main: prison.PrisonMain
+author: func
+version: 1.0
+name: Prison
