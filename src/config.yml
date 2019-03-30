@@ -4,7 +4,7 @@
 # MySQL Keys
 
 user: 'root'
-password: 'hDdsYHNs6xD0VYNxZU'
+password: '1234567890q'
 host: 'topeontest.playvds.online'
 database: 'data'
 port: 2452
@@ -86,3 +86,11 @@ mines:
         %2 тип : процент%.
         %3 тип : процент%.'
 
+# Blocks
+
+GRASS: 'Mannahara'
+STONE: 'Stone'
+LOG: 'Log'
+DIRT: 'Zyne'
+SAND: 'rugofluk'
+COBBLESTONE: 'JuanFco'

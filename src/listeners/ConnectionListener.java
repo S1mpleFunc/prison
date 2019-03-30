@@ -1,6 +1,8 @@
 package listeners;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,7 +20,7 @@ public class ConnectionListener implements Listener {
 
     @EventHandler
     public void onJoinEvent(PlayerJoinEvent e) {
-
+        e.setJoinMessage(null);
         Player p = e.getPlayer();
         try {
             ResultSet rs = plugin.statement.executeQuery("SELECT * FROM `PrisonPlayers` WHERE uuid = '" + p.getUniqueId() + "';");
@@ -30,11 +32,11 @@ public class ConnectionListener implements Listener {
                         rs.getInt("level"),
                         rs.getInt("kills"),
                         rs.getInt("deaths"),
-                        rs.getString("blocks")
-                        )
+                        rs.getString("blocks"))
                 );
+
             } else {
-                plugin.statement.executeUpdate("INSERT INTO `PrisonPlayers` (uuid, gold, level, kills, deaths, blocks) VALUES('" + p.getUniqueId() + "', 0, 1, 0, 0, 'STONE 0');");
+                plugin.statement.executeUpdate("INSERT INTO `PrisonPlayers` (uuid, gold, level, kills, deaths, blocks) VALUES('" + p.getUniqueId() + "', 0, 1, 0, 0, 'STONE 0 LEAVES 0 LOG 0 SAND 0 GRAVEL 0 DIRT 0 COBBLESTONE 0');");
                 p.sendMessage("Новый профиль создан");
             }
 
@@ -50,8 +52,13 @@ public class ConnectionListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         Player p = e.getPlayer();
+        e.setQuitMessage(null);
+        PrisonPlayer prisonPlayer = null;
+        if(plugin.stats.containsKey(p.getUniqueId()))
+            prisonPlayer = plugin.stats.get(p.getUniqueId());
+        else
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("error")) + "Упс... Произошла ошибка номер 5, у " + p.getName() + ", если вы видете ЭТО значит, я что то сломал, простите.");
         try {
-            PrisonPlayer prisonPlayer = plugin.stats.get(p.getUniqueId());
             ResultSet rs = plugin.statement.executeQuery("SELECT * FROM `PrisonPlayers` WHERE uuid = '" + p.getUniqueId() + "';");
             if (rs.next()) {
                 // int new_kills = rs.getInt("kills") + NEW KILLS;
@@ -60,7 +67,8 @@ public class ConnectionListener implements Listener {
                 plugin.statement.executeUpdate("UPDATE `PrisonPlayers` SET blocks ='" + prisonPlayer.getBlocks() + "' WHERE uuid = '" + p.getUniqueId() + "';");
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("error")) +
+                    "Упс... Произошла ошибка номер 4, статистика " + p.getName() + " не сохранилась, пожалуйста отправте это сообщение администратору в полном виде." + prisonPlayer.getBlocks());
         }
         //Удаление игрока из временного регистра
         plugin.stats.remove(p.getUniqueId());

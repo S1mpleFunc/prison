@@ -47,13 +47,13 @@ public class PrisonPlayer {
         return blocks;
     }
 
-    public void incrimentBlock(Material material) {
+    public void incrimentBlock(String material) {
         block = this.getBlocks().split(" ");
         String string = "";
         Integer value;
 
         for (int i = 0; i < block.length; i++) {
-            if (block[i].equalsIgnoreCase(material.toString())) {
+            if (block[i].equalsIgnoreCase(material)) {
                 value = Integer.parseInt(block[ i + 1 ]) + 1;
                 block[i + 1] = value.toString();
             }

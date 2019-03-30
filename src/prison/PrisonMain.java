@@ -25,8 +25,7 @@ public class PrisonMain extends JavaPlugin {
             statement = base.openConnection().createStatement();
             statement.executeUpdate("CREATE TABLE IF NOT EXISTS `PrisonPlayers` (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, uuid TEXT, gold INT, level INT, kills INT, deaths INT, blocks TEXT);");
             getLogger().info("[!] Connected to DataBase.");
-        } catch (ClassNotFoundException | SQLException e)
-        {
+        } catch (ClassNotFoundException | SQLException e) {
             getLogger().info("[!] Connection exception.");
             Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("fatal_error")) + "Упс... Произошла фатальная ошибка номер 2, просим как можно быстрее оповестите администраторов.");
         }
@@ -39,6 +38,5 @@ public class PrisonMain extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
     }
 }
