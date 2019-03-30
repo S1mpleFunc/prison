@@ -1,7 +1,9 @@
 package prison;
 
 import listeners.ConnectionListener;
+import listeners.HandListener;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import sql.MySQL;
 
@@ -26,15 +28,17 @@ public class PrisonMain extends JavaPlugin {
         } catch (ClassNotFoundException | SQLException e)
         {
             getLogger().info("[!] Connection exception.");
+            Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', getConfig().getString("fatal_error")) + "Упс... Произошла фатальная ошибка номер 2, просим как можно быстрее оповестите администраторов.");
         }
+
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(), this);
+        Bukkit.getPluginManager().registerEvents(new HandListener(), this);
+
         stats = new HashMap<>();
     }
+
     @Override
     public void onDisable() {
 
-    }
-    public PrisonMain getInctance () {
-        return getPlugin(PrisonMain.class);
     }
 }

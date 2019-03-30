@@ -4,16 +4,16 @@
 # MySQL Keys
 
 user: 'root'
-password: ''
-host: 'localhost'
+password: 'hDdsYHNs6xD0VYNxZU'
+host: 'topeontest.playvds.online'
 database: 'data'
-port: 3306
+port: 2452
 
 # Messages Configuration
 
-info: '&7[&ai&7]'
-error: '&7[&c!&l&6*&7]'
-fatal_error: '&7[&c!&l&6**&7]'
+info: '&7[&ai&7] '
+error: '&7[&c!&l&6*&7] '
+fatal_error: '&7[&c!&l&6**&7] '
 
 # Items
 
