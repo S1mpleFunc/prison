@@ -36,7 +36,7 @@ public class ConnectionListener implements Listener {
                 );
 
             } else {
-                plugin.statement.executeUpdate("INSERT INTO `PrisonPlayers` (uuid, gold, level, kills, deaths, blocks) VALUES('" + p.getUniqueId() + "', 0, 1, 0, 0, 'STONE 0 LEAVES 0 LOG 0 SAND 0 GRAVEL 0 DIRT 0 COBBLESTONE 0');");
+                plugin.statement.executeUpdate("INSERT INTO `PrisonPlayers` (uuid, gold, level, kills, deaths, blocks) VALUES('" + p.getUniqueId() + "', 0, 1, 0, 0, 'STONE 0 LEAVES 0 LOG 0 SAND 0 GRAVEL 0 DIRT 0 COBBLESTONE 0 NETHERRACK 0');");
                 p.sendMessage("Новый профиль создан");
             }
 
@@ -70,7 +70,6 @@ public class ConnectionListener implements Listener {
             Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("error")) +
                     "Упс... Произошла ошибка номер 4, статистика " + p.getName() + " не сохранилась, пожалуйста отправте это сообщение администратору в полном виде." + prisonPlayer.getBlocks());
         }
-        //Удаление игрока из временного регистра
         plugin.stats.remove(p.getUniqueId());
     }
 }
