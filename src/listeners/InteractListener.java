@@ -89,6 +89,9 @@ public class InteractListener implements Listener {
                     PrisonMain.getInstance().setGLOBAL_MONEY_BOOSTER(2);
                     PrisonMain.getInstance().setMONEY_BOOSTER_END(60 * 30);
                     Bukkit.broadcastMessage(PrisonMain.getInstance().getInfoPrefix() + p.getName() + " активировал бустер денег на 30 минут.");
+                } else if (itemStack.getType().equals(Material.BOOK) && ChatColor.stripColor(itemStack.getItemMeta().getDisplayName()).equalsIgnoreCase("Подвал")) {
+                    PrisonMain.getInstance().deleteOneItem(p);
+                    PrisonMain.getInstance().getStats().get(p.getUniqueId()).setCanEnter(1);
                 }
             } catch (Exception ex) {}
         }

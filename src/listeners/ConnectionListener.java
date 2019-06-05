@@ -47,7 +47,7 @@ public class ConnectionListener implements Listener {
         try {
             ResultSet rs = PrisonMain.getInstance().getStatement().executeQuery("SELECT * FROM `PrisonPlayers` WHERE uuid = '" + p.getUniqueId() + "';");
             if (rs.next())
-                PrisonMain.getInstance().getStatement().executeUpdate("UPDATE `PrisonPlayers` SET blocks = '" + prisonPlayer.getBlocks() + "', gold = '" + prisonPlayer.getGold() + "', level = '" + prisonPlayer.getLevel() + "', kills = '" + prisonPlayer.getKills() + "', clan = '" + prisonPlayer.getPrisonClanName() + "' WHERE uuid = '" + p.getUniqueId() + "';");
+                PrisonMain.getInstance().getStatement().executeUpdate("UPDATE `PrisonPlayers` SET blocks = '" + prisonPlayer.getBlocks() + "', gold = '" + prisonPlayer.getGold() + "', level = '" + prisonPlayer.getLevel() + "', kills = '" + prisonPlayer.getKills() + "', clan = '" + prisonPlayer.getPrisonClanName() + "', enter = '" + prisonPlayer.isCanEnter() + "' WHERE uuid = '" + p.getUniqueId() + "';");
 
             Bukkit.getLogger().info(p.getName() + " сохранен.");
         } catch (SQLException ex) {
@@ -69,19 +69,20 @@ public class ConnectionListener implements Listener {
                         rs.getInt("kills"),
                         rs.getInt("deaths"),
                         rs.getString("blocks"),
-                        PrisonClans.getByName(rs.getString("clan"))
-                        )
+                        PrisonClans.getByName(rs.getString("clan")),
+                        rs.getInt("enter"))
                 );
             } else {
-                PrisonMain.getInstance().getStatement().executeUpdate("INSERT INTO `PrisonPlayers` (uuid, gold, level, kills, deaths, blocks, clan) VALUES('" + p.getUniqueId() + "', 0, 1, 0, 0, 'STONE 0 LEAVES 0 LOG 0 SAND 0 GRAVEL 0 DIRT 0 COBBLESTONE 0 NETHERRACK 0 RAT 0', '§7Заключенный');");
+                PrisonMain.getInstance().getStatement().executeUpdate("INSERT INTO `PrisonPlayers` (uuid, gold, level, kills, deaths, blocks, clan, enter) VALUES('" + p.getUniqueId() + "', 0, 1, 0, 0, 'DIRT 0 SAND 0 GRAVEL 0 STONE 0 COBBLESTONE 0 COAL_ORE 0 IRON_ORE 0 LOG 0 LOG_2 0 GOLD_ORE 0 COAL_BLOCK 0 NETHERRACK 0 QUARTZ_ORE 0 SOUL_SAND 0 PRISMARINE 0 SANDSTONE 0 RED_SANDSTONE 0 EMERALD_BLOCK 0 ENDER_STONE 0 OBSIDIAN 0 DIAMOND_BLOCK 0 LAPIS_BLOCK 0 IRON_BLOCK 0 GOLD_BLOCK 0 RAT 0', '§7Заключенный', 0);");
                 p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + "Новый профиль создан");
-                meta.setDisplayName("Деревянный топор 1 уровня");
+                meta.setDisplayName("§f§lДеревянный топор 1 уровня");
                 axe.setItemMeta(meta);
                 p.getInventory().addItem(axe);
                 p.getInventory().addItem(new ItemStack(Material.COOKED_CHICKEN, 32));
                 loadStats(p);
             }
             PrisonScoreboard.getInstance().setScoreboard(p);
+            p.setMaxHealth(21 + PrisonMain.getInstance().getStats().get(p.getUniqueId()).getLevel());
         } catch (Exception e) {
             p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Упс... Произошла ошибка номер 1, обратитесь к персоналу сообщив номер ошибки.");
         }

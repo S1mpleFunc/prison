@@ -2,6 +2,7 @@ package menu;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -62,6 +63,7 @@ public class LevelMenu {
             prisonPlayer.setGold(prisonPlayer.getGold() - price);
             prisonPlayer.setLevel(prisonPlayer.getLevel() + 1);
             p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + "Теперь у вас §b" + prisonPlayer.getLevel() + "§7 уровень");
+            p.setMaxHealth(21 + PrisonMain.getInstance().getStats().get(p.getUniqueId()).getLevel());
         } catch (Exception e) {
             p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Упс... Произошла ошибка номер 8, обратитесь к персоналу сообщив номер ошибки.");
         }

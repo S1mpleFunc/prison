@@ -1,6 +1,5 @@
 package listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,10 +10,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import prison.PrisonMain;
 import prison.PrisonPlayer;
-import prison.PrisonScoreboard;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.UUID;
 
 public class PlayerDeathListener implements Listener {
@@ -62,7 +59,6 @@ public class PlayerDeathListener implements Listener {
                 for (ItemStack item : returnDrop.get(e.getPlayer().getUniqueId())) {
                     if (item == null) continue;
                     e.getPlayer().getInventory().addItem(item);
-                    e.getPlayer().sendMessage(item.getType().toString());
                 }
                 returnDrop.remove(e.getPlayer().getUniqueId());
             }

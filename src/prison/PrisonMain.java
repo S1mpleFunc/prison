@@ -55,7 +55,7 @@ public class PrisonMain extends JavaPlugin {
         try {
             getLogger().info("[!] Connecting to DataBase.");
             statement = base.openConnection().createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `PrisonPlayers` (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, uuid TEXT, gold FLOAT, level INT, kills INT, deaths INT, blocks TEXT, clan TEXT);");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS `PrisonPlayers` (id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, uuid TEXT, gold FLOAT, level INT, kills INT, deaths INT, blocks TEXT, clan TEXT, enter INT);");
             getLogger().info("[!] Connected to DataBase.");
         } catch (ClassNotFoundException | SQLException e) {
             getLogger().info("[!] Connection exception.");
@@ -113,7 +113,7 @@ public class PrisonMain extends JavaPlugin {
                         p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + PrisonMain.getInstance().getConfig().getString("needs." + effect + ".message"));
                     }
                 }
-                if (PrisonMain.getInstance().getGLOBAL_TIME() % 10 == 0) {
+                if (PrisonMain.getInstance().getGLOBAL_TIME() % 120 == 0) {
                     if (Bukkit.getWorld("world").getEntities().stream().filter(x -> x.getType().equals(EntityType.SILVERFISH)).toArray().length < 30)
                     for (int i = 1; i < getConfig().getInt("rats.amount") + 1; i++)
                         Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), getConfig().getInt("rats." + i + ".x"), getConfig().getInt("rats." + i + ".y"), getConfig().getInt("rats." + i + ".z")), EntityType.SILVERFISH);

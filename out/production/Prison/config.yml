@@ -18,17 +18,31 @@ fatal_error: '&7[&c!&l&6**&7] '
 # Blocks
 
 prices:
-  list: "DIRT SAND GRAVEL STONE COBBLESTONE COAL_ORE IRON_ORE LOG LOG_2 GOLD_BLOCK"
-  DIRT: 0.1
-  SAND: 25
-  GRAVEL: 300
-  STONE: 1000
-  COBBLESTONE: 333
-  COAL_ORE: 200
-  IRON_ORE: 200
-  LOG: 0.1
-  LOG_2: 0.1
-  GOLD_BLOCK: 100
+  list: 'DIAMOND_BLOCK GOLD_BLOCK IRON_BLOCK LAPIS_BLOCK DIRT SAND GRAVEL STONE COBBLESTONE COAL_ORE IRON_ORE LOG LOG_2 GOLD_ORE COAL_BLOCK NETHERRACK QUARTZ_ORE SOUL_SAND PRISMARINE SANDSTONE RED_SANDSTONE EMERALD_BLOCK ENDER_STONE OBSIDIAN'
+  DIRT: 0.02
+  SAND: 0.02
+  GRAVEL: 0.03
+  STONE: 0.08
+  COBBLESTONE: 0.03
+  COAL_ORE: 0.11
+  GOLD_ORE: 0.5
+  IRON_ORE: 0.3
+  LOG: 0.05
+  LOG_2: 0.05
+  COAL_BLOCK: 1
+  NETHERRACK: 0.07
+  QUARTZ_ORE: 0.14
+  SOUL_SAND: 0.1
+  PRISMARINE: 0.3
+  SANDSTONE: 0.6
+  RED_SANDSTONE: 0.9
+  EMERALD_BLOCK: 1.1
+  ENDER_STONE: 0.3
+  OBSIDIAN: 8
+  LAPIS_BLOCK: 0.3
+  IRON_BLOCK: 0.5
+  GOLD_BLOCK: 0.7
+  DIAMOND_BLOCK: 1
 
 # Needs
 
@@ -59,7 +73,7 @@ rats:
 
 # Drops
 
-no_drop: 'WOOD_PICKAXE WOOD_AXE'
+no_drop: 'WOOD_PICKAXE WOOD_AXE WOOD_SWORD WOOD_SPADE IRON_PICKAXE IRON_SPADE IRON_AXE IRON_SWORD STONE_AXE STONE_SPADE STONE_PICKAXE STONE_SWORD BOW DIAMOND_SWORD DIAMOND_BLADE DIAMOND_SPADE DIAMOND_AXE LEATHER_BOOTS LEATHER_CHESTPLATE LEATHER_HELMET LEATHER_LEGGINGS IRON_BOOTS IRON_CHESTPLATE IRON_HELMET IRON_LEGGINGS DIAMOND_HELMET DIAMOND_CHESTPLATE DIAMOND_LEGGINGS DIAMOND_BOOTS'
 drop:
   items: 8
   1:
@@ -98,15 +112,87 @@ drop:
 # Levels
 
 level:
-  1:
-    price: 100
-    blocks: 1000
   2:
-    price: 1000
-    blocks: 10000
+    price: 12
+    blocks: 40
   3:
-    price: 10000
-    blocks: 100000
+    price: 24
+    blocks: 80
+  4:
+    price: 48
+    blocks: 160
+  5:
+    price: 94
+    blocks: 320
+  6:
+    price: 192
+    blocks: 640
+  7:
+    price: 384
+    blocks: 1280
+  8:
+    price: 768
+    blocks: 2560
+  9:
+    price: 1536
+    blocks: 5120
+  10:
+    price: 3072
+    blocks: 10240
+  11:
+    price: 6144
+    blocks: 20480
+  12:
+    price: 12288
+    blocks: 40960
+  13:
+    price: 24510
+    blocks: 81920
+  14:
+    price: 49152
+    blocks: 163840
+  15:
+    price: 65536
+    blocks: 327680
+  16:
+    price: 131072
+    blocks: 655360
+  17:
+    price: 262144
+    blocks: 1310720
+  18:
+    price: 524288
+    blocks: 2621440
+  19:
+    price: 561337
+    blocks: 3500000
+  20:
+    price: 591124
+    blocks: 4500000
+  21:
+    price: 644731
+    blocks: 4700000
+  22:
+    price: 696743
+    blocks: 5400000
+  23:
+    price: 767856
+    blocks: 6278975
+  24:
+    price: 800000
+    blocks: 6978564
+  25:
+    price: 854327
+    blocks: 7856387
+  26:
+    price: 912896
+    blocks: 8500000
+  27:
+    price: 986538
+    blocks: 9200000
+  28:
+    price: 1000000
+    blocks: 10000000
 
 # Items
 
@@ -116,7 +202,7 @@ items:
       name: 'Деревянная кирка 1 уровня'
       material: 'WOOD_PICKAXE'
       cost: 35
-      effect:
+      effect: 'null'
       blocks:
     2:
       name: 'Деревянная кирка 2 уровня'
@@ -126,9 +212,9 @@ items:
         enchantment: 'DIG_SPEED'
         level: 1
       blocks:
-        DIRT: 30
-        SAND: 30
-        GRAVEL: 30
+        STONE: 290
+        COAL: 10
+        IRON_ORE: 0
     3:
       name: 'Деревянная кирка 3 уровня'
       material: 'WOOD_PICKAXE'
@@ -137,36 +223,758 @@ items:
         enchantment: 'DIG_SPEED'
         level: 2
       blocks:
-        DIRT: 30
-        SAND: 30
-        GRAVEL: 30
+        STONE: 570
+        COAL: 30
+        IRON_ORE: 0
     4:
       name: 'Деревянная кирка 4 уровня'
-      material: 'DIAMOND_PICKAXE'
+      material: 'WOOD_PICKAXE'
       cost: 200
       effect:
         enchantment: 'DIG_SPEED'
-        level: 1000
+        level: 3
       blocks:
-        DIRT: 30
-        SAND: 30
-        GRAVEL: 30
-
+        STONE: 1050
+        COAL: 150
+        IRON_ORE: 0
+    5:
+      name: 'Каменная кирка 5 уровня'
+      material: 'STONE_PICKAXE'
+      cost: 400
+      effect: 'null'
+      blocks:
+        STONE: 2100
+        COAL: 300
+        IRON_ORE: 0
+    6:
+      name: 'Каменная кирка 6 уровня'
+      material: 'STONE_PICKAXE'
+      cost: 800
+      effect:
+        enchantment: 'DIG_SPEED'
+        level: 1
+      blocks:
+        STONE: 3000
+        COAL: 500
+        IRON_ORE: 20
+    7:
+      name: 'Каменная кирка 7 уровня'
+      material: 'STONE_PICKAXE'
+      cost: 1600
+      effect:
+        enchantment: 'DIG_SPEED'
+        level: 2
+      blocks:
+        STONE: 4000
+        COAL: 700
+        IRON_ORE: 50
+    8:
+      name: 'Каменная кирка 8 уровня'
+      material: 'STONE_PICKAXE'
+      cost: 2200
+      effect:
+        enchantment: 'DIG_SPEED'
+        level: 3
+      blocks:
+        STONE: 6500
+        COAL: 1000
+        IRON_ORE: 120
+    9:
+      name: 'Железная кирка 9 уровня'
+      material: 'IRON_PICKAXE'
+      cost: 3800
+      effect: 'null'
+      blocks:
+        STONE: 14000
+        COAL: 0
+        IRON_ORE: 300
+    10:
+      name: 'Железная кирка 10 уровня'
+      material: 'IRON_PICKAXE'
+      cost: 5000
+      effect:
+        enchantment: 'DIG_SPEED'
+        level: 1
+      blocks:
+        STONE: 16000
+        COAL: 0
+        IRON_ORE: 500
+    11:
+      name: 'Железная кирка 11 уровня'
+      material: 'IRON_PICKAXE'
+      cost: 7600
+      effect:
+        enchantment: 'DIG_SPEED'
+        level: 2
+      blocks:
+        STONE: 21000
+        COAL: 0
+        IRON_ORE: 910
+    12:
+      name: 'Железная кирка 12 уровня'
+      material: 'IRON_PICKAXE'
+      cost: 9000
+      effect:
+        enchantment: 'DIG_SPEED'
+        level: 3
+      blocks:
+        STONE: 31000
+        COAL: 0
+        IRON_ORE: 1350
+    13:
+      name: 'Алмазная кирка 13 уровня'
+      material: 'DIAMOND_PICKAXE'
+      cost: 15000
+      effect: 'null'
+      blocks:
+        STONE: 45000
+        COAL: 0
+        IRON_ORE: 150
+    14:
+      name: 'Алмазная кирка 14 уровня'
+      material: 'DIAMOND_PICKAXE'
+      cost: 19000
+      effect:
+        enchantment: 'DIG_SPEED'
+        level: 1
+      blocks:
+        STONE: 66320
+        COAL: 0
+        IRON_ORE: 2400
+    15:
+      name: 'Алмазная кирка 15 уровня'
+      material: 'DIAMOND_PICKAXE'
+      cost: 25000
+      effect:
+        enchantment: 'DIG_SPEED'
+        level: 2
+      blocks:
+        STONE: 90200
+        COAL: 0
+        IRON_ORE: 3600
+    16:
+      name: 'Алмазная кирка 16 уровня'
+      material: 'DIAMOND_PICKAXE'
+      cost: 30000
+      effect:
+        enchantment: 'DIG_SPEED'
+        level: 3
+      blocks:
+        STONE: 12300
+        COAL: 0
+        IRON_ORE: 6400
   меч:
-  лук:
-
+    1:
+      name: 'Деревянный меч 1 уровня'
+      material: 'WOOD_SWORD'
+      cost: 0
+      effect: 'null'
+      blocks:
+    2:
+      name: 'Деревянный меч 2 уровня'
+      material: 'WOOD_SWORD'
+      cost: 20
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 1
+      blocks:
+        RAT: 10
+    3:
+      name: 'Деревянный меч 3 уровня'
+      material: 'WOOD_SWORD'
+      cost: 40
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 2
+      blocks:
+        RAT: 30
+    4:
+      name: 'Деревянный меч 4 уровня'
+      material: 'WOOD_SWORD'
+      cost: 80
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 3
+      blocks:
+        RAT: 90
+    5:
+      name: 'Каменный меч 5 уровня'
+      material: 'STONE_SWORD'
+      cost: 160
+      effect: 'null'
+      blocks:
+        RAT: 180
+    6:
+      name: 'Каменный меч 6 уровня'
+      material: 'STONE_SWORD'
+      cost: 220
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 1
+      blocks:
+        RAT: 360
+    7:
+      name: 'Каменный меч 7 уровня'
+      material: 'STONE_SWORD'
+      cost: 280
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 2
+      blocks:
+        RAT: 720
+    8:
+      name: 'Каменный меч 8 уровня'
+      material: 'STONE_SWORD'
+      cost: 400
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 3
+      blocks:
+        RAT: 1500
+    9:
+      name: 'Железный меч 9 уровня'
+      material: 'IRON_SWORD'
+      cost: 450
+      effect: 'null'
+      blocks:
+        RAT: 3000
+    10:
+      name: 'Железный меч 10 уровня'
+      material: 'IRON_SWORD'
+      cost: 540
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 1
+      blocks:
+        RAT: 5000
+    11:
+      name: 'Железный меч 11 уровня'
+      material: 'IRON_SWORD'
+      cost: 1040
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 2
+      blocks:
+        RAT: 6500
+    12:
+      name: 'Железный меч 12 уровня'
+      material: 'IRON_SWORD'
+      cost: 1800
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 3
+      blocks:
+        RAT: 8000
+    13:
+      name: 'Алмазный меч 13 уровня'
+      material: 'DIAMOND_SWORD'
+      cost: 2450
+      effect: 'null'
+      blocks:
+        RAT: 12000
+    14:
+      name: 'Алмазный меч 14 уровня'
+      material: 'DIAMOND_SWORD'
+      cost: 3100
+      effect:
+        enchantment: 'DAMAGE_ALL'
+        level: 1
+      blocks:
+        RAT: 14500
   шлем:
-  доспехи:
+    1:
+      name: '§6§lКожанный шлем 1 уровня'
+      material: 'LEATHER_HELMET'
+      cost: 0
+      effect: 'null'
+      blocks:
+    2:
+      name: '§6§lКожанный шлем 2 уровня'
+      material: 'LEATHER_HELMET'
+      cost: 40
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 10
+    3:
+      name: '§6§lКожанный шлем 3 уровня'
+      material: 'LEATHER_HELMET'
+      cost: 68
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 2
+        blocks:
+          RAT: 20
+    4:
+      name: '§6§lКожанный шлем 4 уровня'
+      material: 'LEATHER_HELMET'
+      cost: 120
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 3
+      blocks:
+        RAT: 40
+    5:
+      name: '§6§lКольчужный шлем 5 уровня'
+      material: 'CHAINMAIL_HELMET'
+      cost: 200
+      effect: 'null'
+      blocks:
+        RAT: 70
+    6:
+      name: '§6§lКольчужный шлем 6 уровня'
+      material: 'CHAINMAIL_HELMET'
+      cost: 300
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 200
+    7:
+      name: '§6§lКольчужный шлем 7 уровня'
+      material: 'CHAINMAIL_HELMET'
+      cost: 550
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 2
+      blocks:
+        RAT: 300
+    8:
+      name: '§6§lКольчужный шлем 8 уровня'
+      material: 'CHAINMAIL_HELMET'
+      cost: 900
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 3
+      blocks:
+        RAT: 350
+    9:
+      name: '§6§lЖелезный шлем 9 уровня'
+      material: 'IRON_HELMET'
+      cost: 1350
+      effect: 'null'
+      blocks:
+        RAT: 600
+    10:
+      name: '§6§lЖелезный шлем 10 уровня'
+      material: 'IRON_HELMET'
+      cost: 1950
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 1100
+    11:
+      name: '§6§lЖелезный шлем 11 уровня'
+      material: 'IRON_HELMET'
+      cost: 2800
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 2
+      blocks:
+        RAT: 1650
+    12:
+      name: '§6§lЖелезный шлем 12 уровня'
+      material: 'IRON_HELMET'
+      cost: 3900
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 3
+      blocks:
+        RAT: 2400
+    13:
+      name: '§6§lАлмазный шлем 13 уровня'
+      material: 'DIAMOND_HELMET'
+      cost: 5400
+      effect: 'null'
+      blocks:
+        RAT: 3700
+    14:
+      name: '§6§lАлмазный шлем 14 уровня'
+      material: 'DIAMOND_HELMET'
+      cost: 7200
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 5800
+  нагрудник:
+    1:
+      name: '§6§lКожанный нагрудник 1 уровня'
+      material: 'LEATHER_CHESTPLATE'
+      cost: 0
+      effect: 'null'
+      blocks:
+    2:
+      name: '§6§lКожанный нагрудник 2 уровня'
+      material: 'LEATHER_CHESTPLATE'
+      cost: 50
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 8
+    3:
+      name: '§6§lКожанный нагрудник 3 уровня'
+      material: 'LEATHER_CHESTPLATE'
+      cost: 80
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 2
+      blocks:
+        RAT: 16
+    4:
+      name: '§6§lКожанный нагрудник 4 уровня'
+      material: 'LEATHER_CHESTPLATE'
+      cost: 120
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 3
+      blocks:
+        RAT: 28
+    5:
+      name: '§6§lКольчужный нагрудник 5 уровня'
+      material: 'CHAINMAIL_CHESTPLATE'
+      cost: 190
+      effect: 'null'
+      blocks:
+        RAT: 50
+    6:
+      name: '§6§lКольчужный нагрудник 6 уровня'
+      material: 'CHAINMAIL_CHESTPLATE'
+      cost: 300
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 110
+    7:
+      name: '§6§lКольчужный нагрудник 7 уровня'
+      material: 'CHAINMAIL_CHESTPLATE'
+      cost: 500
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 2
+      blocks:
+        RAT: 225
+    8:
+      name: '§6§lКольчужный нагрудник 8 уровня'
+      material: 'CHAINMAIL_CHESTPLATE'
+      cost: 350
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 3
+      blocks:
+        RAT: 480
+    9:
+      name: '§6§lЖелезный нагрудник 9 уровня'
+      material: 'IRON_CHESTPLATE'
+      cost: 1500
+      effect: 'null'
+      blocks:
+        RAT: 800
+    10:
+      name: '§6§lЖелезный нагрудник 10 уровня'
+      material: 'IRON_CHESTPLATE'
+      cost: 2100
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 1400
+    11:
+      name: '§6§lЖелезный нагрудник 11 уровня'
+      material: 'IRON_CHESTPLATE'
+      cost: 2300
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 2
+      blocks:
+        RAT: 2600
+    12:
+      name: '§6§lЖелезный нагрудник 12 уровня'
+      material: 'IRON_CHESTPLATE'
+      cost: 3600
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 3
+      blocks:
+        RAT: 4000
+    13:
+      name: '§6§lАлмазный нагрудник 13 уровня'
+      material: 'DIAMOND_CHESTPLATE'
+      cost: 4800
+      effect: 'null'
+      blocks:
+        RAT: 6500
+    14:
+      name: '§6§lАлмазный нагрудник 14 уровня'
+      material: 'DIAMOND_CHESTPLATE'
+      cost: 7900
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 9000
   поножи:
+      1:
+        name: '§6§lКожанные поножи 1 уровня'
+        material: 'LEATHER_LEGGINS'
+        cost: 0
+        effect: 'null'
+        blocks:
+      2:
+        name: '§6§lКожанные поножи 2 уровня'
+        material: 'LEATHER_LEGGINS'
+        cost: 40
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 1
+        blocks:
+          RAT: 7
+      3:
+        name: '§6§lКожанные поножи 3 уровня'
+        material: 'LEATHER_LEGGINS'
+        cost: 68
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 2
+        blocks:
+          RAT: 14
+      4:
+        name: '§6§lКожанные поножи 4 уровня'
+        material: 'LEATHER_LEGGINS'
+        cost: 110
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 3
+        blocks:
+          RAT: 30
+      5:
+        name: '§6§lКольчужные поножи 5 уровня'
+        material: 'CHAINMAIL_LEGGINS'
+        cost: 140
+        effect: 'null'
+        blocks:
+          RAT: 55
+      6:
+        name: '§6§lКольчужные поножи 6 уровня'
+        material: 'CHAINMAIL_LEGGINS'
+        cost: 280
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 1
+        blocks:
+          RAT: 90
+      7:
+        name: '§6§lКольчужные поножи 7 уровня'
+        material: 'CHAINMAIL_LEGGINS'
+        cost: 360
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 2
+        blocks:
+          RAT: 150
+      8:
+        name: '§6§lКольчужные поножи 8 уровня'
+        material: 'CHAINMAIL_LEGGINS'
+        cost: 720
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 3
+        blocks:
+          RAT: 290
+      9:
+        name: '§6§lЖелезные поножи 9 уровня'
+        material: 'IRON_LEGGINS'
+        cost: 1020
+        effect: 'null'
+        blocks:
+          RAT: 540
+      10:
+        name: '§6§lЖелезные поножи 10 уровня'
+        material: 'IRON_LEGGINS'
+        cost: 1800
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 1
+        blocks:
+          RAT: 960
+      11:
+        name: '§6§lЖелезные поножи 11 уровня'
+        material: 'IRON_LEGGINS'
+        cost: 2900
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 2
+        blocks:
+          RAT: 1900
+      12:
+        name: '§6§lЖелезные поножи 12 уровня'
+        material: 'IRON_LEGGINS'
+        cost: 3900
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 3
+        blocks:
+          RAT: 3400
+      13:
+        name: '§6§lАлмазные поножи 13 уровня'
+        material: 'DIAMOND_LEGGINS'
+        cost: 5200
+        effect: 'null'
+        blocks:
+          RAT: 5100
+      14:
+        name: '§6§lАлмазные поножи 14 уровня'
+        material: 'DIAMOND_LEGGINS'
+        cost: 7400
+        effect:
+          enchantment: 'PROTECTION_ENVIRONMENTAL'
+          level: 1
+        blocks:
+          RAT: 7200
   ботинки:
-
+    1:
+      name: '§6§lКожанные ботинки 1 уровня'
+      material: 'LEATHER_BOOTS'
+      cost: 0
+      effect: 'null'
+      blocks:
+    2:
+      name: '§6§lКожанные ботинки 2 уровня'
+      material: 'LEATHER_BOOTS'
+      cost: 50
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 10
+    3:
+      name: '§6§lКожанные ботинки 3 уровня'
+      material: 'LEATHER_BOOTS'
+      cost: 75
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 2
+      blocks:
+        RAT: 20
+    4:
+      name: '§6§lКожанные ботинки 4 уровня'
+      material: 'LEATHER_BOOTS'
+      cost: 150
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 3
+      blocks:
+        RAT: 40
+    5:
+      name: '§6§lКольчужные ботинки 5 уровня'
+      material: 'CHAINMAIL_BOOTS'
+      cost: 300
+      effect: 'null'
+      blocks:
+        RAT: 60
+    6:
+      name: '§6§lКольчужные ботинки 6 уровня'
+      material: 'CHAINMAIL_BOOTS'
+      cost: 600
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 90
+    7:
+      name: '§6§lКольчужные ботинки 7 уровня'
+      material: 'CHAINMAIL_BOOTS'
+      cost: 900
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 2
+      blocks:
+        RAT: 160
+    8:
+      name: '§6§lКольчужные ботинки 8 уровня'
+      material: 'CHAINMAIL_BOOTS'
+      cost: 1500
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 3
+      blocks:
+        RAT: 320
+    9:
+      name: '§6§lЖелезные ботинки 9 уровня'
+      material: 'IRON_BOOTS'
+      cost: 2500
+      effect: 'null'
+      blocks:
+        RAT: 600
+    10:
+      name: '§6§lЖелезные ботинки 10 уровня'
+      material: 'IRON_BOOTS'
+      cost: 4000
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 1300
+    11:
+      name: '§6§lЖелезные ботинки 11 уровня'
+      material: 'IRON_BOOTS'
+      cost: 5100
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 2
+      blocks:
+        RAT: 1800
+    12:
+      name: '§6§lЖелезные ботинки 12 уровня'
+      material: 'IRON_BOOTS'
+      cost: 6000
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 3
+      blocks:
+        RAT: 2600
+    13:
+      name: '§6§lАлмазные ботинки 13 уровня'
+      material: 'DIAMOND_BOOTS'
+      cost: 7000
+      effect: 'null'
+      blocks:
+        RAT: 3800
+    14:
+      name: '§6§lАлмазные ботинки 14 уровня'
+      material: 'DIAMOND_BOOTS'
+      cost: 8000
+      effect:
+        enchantment: 'PROTECTION_ENVIRONMENTAL'
+        level: 1
+      blocks:
+        RAT: 5500
 # Mines
 
-mines_value: 2
+mines_value: 9
 
 mines:
   1:
-    name: '%Шахта 1%'
+    name: '§6§lНеизведанный подвал'
+    material: 'BOOK'
+    min_level: 3
+    pvp: true
+    h: 20
+    diametr: 20
+    x: -250
+    y: 100
+    z: 100
+    time: 50
+    types: 'DIAMOND_BLOCK GOLD_BLOCK LAPIS_BLOCK IRON_BLOCK'
+    tpx: 1
+    tpy: 1
+    tpz: 1
+  2:
+    name: '§7§lЗемлянка'
     material: 'DIRT'
     min_level: 1
     pvp: false
@@ -180,10 +988,10 @@ mines:
     tpx: 1
     tpy: 1
     tpz: 1
-  2:
-    name: '%Шахта 2%'
+  3:
+    name: '§7§lКаменная шахта'
     material: 'STONE'
-    min_level: 8
+    min_level: 3
     pvp: false
     h: 30
     diametr: 30
@@ -191,7 +999,97 @@ mines:
     y: 100
     z: 100
     time: 180
-    types: 'STONE STONE COBBLESTONE COAL_ORE STONE IRON_ORE'
+    types: 'STONE STONE STONE STONE STONE STONE STONE STONE STONE STONE STONE STONE STONE STONE COAL_ORE COAL_ORE COAL_ORE COAL_ORE COAL_BLOCK'
+    tpx:
+    tpy:
+    tpz:
+  4:
+    name: '§7§lРудник'
+    material: 'IRON_ORE'
+    min_level: 5
+    pvp: false
+    h: 30
+    diametr: 30
+    x: -400
+    y: 100
+    z: 100
+    time: 180
+    types: 'IRON_ORE IRON_ORE IRON_ORE IRON_ORE IRON_ORE IRON_ORE GOLD_ORE GOLD_ORE GOLD_ORE GOLD_ORE'
+    tpx:
+    tpy:
+    tpz:
+  5:
+    name: '§c§lАдская шахта'
+    material: 'NETHERRACK'
+    min_level: 7
+    pvp: false
+    h: 30
+    diametr: 30
+    x: -450
+    y: 100
+    z: 100
+    time: 180
+    types: 'NETHERRACK NETHERRACK NETHERRACK NETHERRACK NETHERRACK NETHERRACK NETHERRACK NETHERRACK NETHERRACK QUARTZ_ORE QUARTZ_ORE QUARTZ_ORE SOUL_SAND SOUL_SAND'
+    tpx:
+    tpy:
+    tpz:
+  6:
+    name: '§3§lОкеан'
+    material: 'WATER_BUCKET'
+    min_level: 9
+    pvp: false
+    h: 30
+    diametr: 30
+    x: -500
+    y: 100
+    z: 100
+    time: 180
+    types: 'PRISMARINE'
+    tpx:
+    tpy:
+    tpz:
+  7:
+    name: '§e§lПесчанная шахта'
+    material: 'SANDSTONE'
+    min_level: 11
+    pvp: true
+    h: 30
+    diametr: 30
+    x: -550
+    y: 100
+    z: 100
+    time: 180
+    types: 'RED_SANDSTONE SANDSTONE SANDSTONE'
+    tpx:
+    tpy:
+    tpz:
+  8:
+    name: '§2§lИзумрудная шахта'
+    material: 'EMERALD_BLOCK'
+    min_level: 15
+    pvp: true
+    h: 30
+    diametr: 30
+    x: -600
+    y: 100
+    z: 100
+    time: 180
+    types: 'EMERALD_BLOCK'
+    tpx:
+    tpy:
+    tpz:
+  9:
+    name: '§5§lМир дракона'
+    material: 'ENDER_STONE'
+    min_level: 20
+    pvp: true
+    h: 30
+    diametr: 30
+    x: -650
+    y: 100
+    z: 100
+    time: 180
+    types: 'ENDER_STONE ENDER_STONE OBSIDIAN'
     tpx:
     tpy:
     tpz:

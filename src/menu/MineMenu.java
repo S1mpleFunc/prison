@@ -27,19 +27,19 @@ public class MineMenu {
 
     public void openPlayerGUI (Player p) {
         if (PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
-            nonemeta.setDisplayName("НЕДОСТУПНО");
+            nonemeta.setDisplayName("§c§lНЕДОСТУПНО");
             none.setItemMeta(nonemeta);
 
             PrisonPlayer prisonPlayer = PrisonMain.getInstance().getStats().get(p.getUniqueId());
 
-            infometa.setDisplayName("Информация " + p.getName());
+            infometa.setDisplayName("§lИнформация §e§l" + p.getName());
             infometa.setLore(Arrays.asList("",
-                    ChatColor.translateAlternateColorCodes('&', "&f* Уровень: " + prisonPlayer.getLevel()),
-                    ChatColor.translateAlternateColorCodes('&', "&f* Денег: " + prisonPlayer.getGold()),
-                    ChatColor.translateAlternateColorCodes('&', "&f* Убийств: " + prisonPlayer.getKills()),
-                    ChatColor.translateAlternateColorCodes('&', "&f* Блоков: " + prisonPlayer.getBlocksValue()),
-                    ChatColor.translateAlternateColorCodes('&', "&f* Индентификатор: " + prisonPlayer.getId())
-            ));
+                    "§f* Уровень: §b§l" + prisonPlayer.getLevel(),
+                    "§f* Денег: §6§l" + prisonPlayer.getGold(),
+                    "§f* Убийств: §c§l" + prisonPlayer.getKills(),
+                    "§f* Блоков: §c§l" + prisonPlayer.getBlocksValue(),
+                    "§f* Индентификатор: §l" + prisonPlayer.getId())
+            );
             infolist.setItemMeta(infometa);
 
             //Инвентарь с живыми игроками
@@ -50,20 +50,22 @@ public class MineMenu {
                 i.setItem(u, empty);
             for (int u = 19; u < 26; u++)
                 i.setItem(u, none);
-            for (int u = 29; u < 34; u++)
-                i.setItem(u, none);
             for (int j = 0; j < PrisonMain.getInstance().getMines().size(); j++) {
+                if (j == 0 && prisonPlayer.isCanEnter() == 0) continue;
                 PrisonMine prisonMine = PrisonMain.getInstance().getMines().get(j);
                 if (prisonPlayer.getLevel() >= prisonMine.getMlevel()) {
                     ItemStack mine = new ItemStack(prisonMine.getMaterial());
                     ItemMeta minemeta = mine.getItemMeta();
                     minemeta.setDisplayName(prisonMine.getName());
+                    String s;
+                    if (prisonMine.getPvp()) s = "§c§lЕсть";
+                    else s = "§a§lОтсутствует";
                     minemeta.setLore(Arrays.asList("",
-                            ChatColor.translateAlternateColorCodes('&', "&f* Минимальный уровень: " + prisonMine.getMlevel()),
-                            ChatColor.translateAlternateColorCodes('&', "&f* Наличте ПВП: " + prisonMine.getPvp())));
+                            "§f§l* Минимальный уровень: §b§l" + prisonMine.getMlevel(),
+                            "§f§l* Наличте ПВП: " + s));
                     mine.setItemMeta(minemeta);
 
-                    i.setItem(19 + j, mine);
+                    i.setItem(18 + j, mine);
                 }
             }
             i.setItem(40, infolist);

@@ -14,9 +14,10 @@ public class PrisonPlayer {
     private int deaths;
     private String blocks;
     private PrisonClans prisonClans;
+    private int canEnter;
 
     //                       id	        uuid	  gold	    level	   kills	  deaths	blocks
-    public PrisonPlayer (int id, float gold, int level, int kills, int deaths,  String blocks, PrisonClans prisonClans) {
+    public PrisonPlayer (int id, float gold, int level, int kills, int deaths,  String blocks, PrisonClans prisonClans, int canEnter) {
         this.id = id;
         this.gold = gold;
         this.level = level;
@@ -24,6 +25,7 @@ public class PrisonPlayer {
         this.deaths = deaths;
         this.blocks = blocks;
         this.prisonClans = prisonClans;
+        this.canEnter = canEnter;
     }
 
     public int getId() {
@@ -44,6 +46,9 @@ public class PrisonPlayer {
     public String getBlocks() {
         return blocks;
     }
+    public int isCanEnter() {
+        return canEnter;
+    }
 
     public void incBlock(String material) {
         block = this.getBlocks().split(" ");
@@ -61,7 +66,13 @@ public class PrisonPlayer {
         this.blocks = string;
     }
     public void incRat () {
-        this.blocks = (Integer.parseInt(this.getBlocks().split(" ")[this.getBlocks().split(" ").length - 1]) + 1) + "";
+        block = this.getBlocks().split(" ");
+        int rats = Integer.parseInt(block[block.length - 1]) + 1;
+        String string = "";
+        for (int i = 0; i < block.length - 1; i++)
+            string += block[i] + " ";
+        string += rats;
+        this.blocks = string;
     }
     public int getBlocksValue() {
         int blocks = 0;
@@ -87,6 +98,9 @@ public class PrisonPlayer {
     }
     public void setClan(PrisonClans prisonClans) {
         this.prisonClans = prisonClans;
+    }
+    public void setCanEnter(int canEnter) {
+        this.canEnter = canEnter;
     }
 
     public String getPrisonClanName() {

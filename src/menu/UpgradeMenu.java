@@ -7,6 +7,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import prison.PrisonMain;
+import prison.PrisonPlayer;
 import prison.PrisonUpgrade;
 
 import java.util.Arrays;
@@ -19,9 +20,11 @@ public class UpgradeMenu {
 
     public void openPlayerGUI (Player p) {
         if (PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
+            PrisonPlayer prisonPlayer = PrisonMain.getInstance().getStats().get(p.getUniqueId());
 
             starmeta.setDisplayName("§b§lУлучшить");
-            starmeta.setLore(Arrays.asList("§f§lЦена: §6§l" + PrisonUpgrade.getInstance().getCost(p) + "$."));
+            starmeta.setLore(Arrays.asList("§f§lЦена: §6§l" + PrisonUpgrade.getInstance().getCost(p) + "$.",
+                                           "§7У вас денег: " + prisonPlayer.getGold() + "$."));
             star.setItemMeta(starmeta);
 
             //Инвентарь с живыми игроками
