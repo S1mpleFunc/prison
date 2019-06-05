@@ -1,9 +1,6 @@
 package prison;
 
-import org.bukkit.Material;
-
-import java.util.HashMap;
-import java.util.UUID;
+import org.bukkit.Location;
 
 public class PrisonPlayer {
 
@@ -11,27 +8,28 @@ public class PrisonPlayer {
 
     //Создание класса хранящего всю статистику игрока
     private int id;
-    private int gold;
+    private float gold;
     private int level;
     private int kills;
     private int deaths;
     private String blocks;
+    private PrisonClans prisonClans;
 
     //                       id	        uuid	  gold	    level	   kills	  deaths	blocks
-    public PrisonPlayer (int id, int gold, int level, int kills, int deaths,  String blocks) {
+    public PrisonPlayer (int id, float gold, int level, int kills, int deaths,  String blocks, PrisonClans prisonClans) {
         this.id = id;
         this.gold = gold;
         this.level = level;
         this.kills = kills;
         this.deaths = deaths;
         this.blocks = blocks;
-
+        this.prisonClans = prisonClans;
     }
 
     public int getId() {
         return id;
     }
-    public int getGold() {
+    public float getGold() {
         return gold;
     }
     public int getLevel() {
@@ -47,14 +45,14 @@ public class PrisonPlayer {
         return blocks;
     }
 
-    public void incrimentBlock(String material) {
+    public void incBlock(String material) {
         block = this.getBlocks().split(" ");
         String string = "";
         Integer value;
 
         for (int i = 0; i < block.length; i++) {
             if (block[i].equalsIgnoreCase(material)) {
-                value = Integer.parseInt(block[ i + 1 ]) + 1;
+                value = Integer.parseInt(block[ i + 1 ]) + 1 * PrisonMain.getInstance().getGLOBAL_BLOCK_BOOSTER();
                 block[i + 1] = value.toString();
             }
             string += block[i] + " ";
@@ -62,10 +60,23 @@ public class PrisonPlayer {
 
         this.blocks = string;
     }
+    public void incRat () {
+        this.blocks = (Integer.parseInt(this.getBlocks().split(" ")[this.getBlocks().split(" ").length - 1]) + 1) + "";
+    }
+    public int getBlocksValue() {
+        int blocks = 0;
+        for (int i = 0; i < this.getBlocks().split(" ").length/2 - 1; i++)
+            blocks += Integer.parseInt(this.getBlocks().split(" ")[i * 2 + 1]);
+        return blocks;
+    }
+    public int getRatsValue() {
+        return Integer.parseInt(this.getBlocks().split(" ")[this.getBlocks().split(" ").length - 1]);
+    }
+
     public void setDeaths(int deaths) {
         this.deaths = deaths;
     }
-    public void setGold(int gold) {
+    public void setGold(float gold) {
         this.gold = gold;
     }
     public void setKills(int kills) {
@@ -73,5 +84,18 @@ public class PrisonPlayer {
     }
     public void setLevel(int level) {
         this.level = level;
+    }
+    public void setClan(PrisonClans prisonClans) {
+        this.prisonClans = prisonClans;
+    }
+
+    public String getPrisonClanName() {
+        return prisonClans.getName();
+    }
+    public PrisonClans getPrisonClans() {
+        return prisonClans;
+    }
+    public Location getPrisonClansLocation() {
+        return prisonClans.getLocation();
     }
 }

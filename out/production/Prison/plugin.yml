@@ -1,4 +1,17 @@
 main: prison.PrisonMain
 author: func
-version: 1.0
+version: 1.32
 name: Prison
+commands:
+  mine:
+    usage:
+  upgrade:
+    usage:
+  level:
+    usage:
+  gift:
+    usage:
+  deposit:
+    usage:
+  fraction:
+    usage:
