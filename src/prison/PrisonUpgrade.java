@@ -49,7 +49,6 @@ public class PrisonUpgrade {
             item.setType(Material.getMaterial(PrisonMain.getInstance().getConfig().getString("items." + type + "." + nextlevel + ".material")));
             PrisonScoreboard.getInstance().updateScoreboard(p);
         } catch (Exception e) {
-            e.printStackTrace();
             p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Этот предмет нельзя улучшить.");
         }
     }

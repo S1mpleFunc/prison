@@ -8,7 +8,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import prison.PrisonMain;
-import prison.PrisonScoreboard;
 
 public class RatKillListener implements Listener {
 

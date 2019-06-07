@@ -2,19 +2,17 @@ package menu;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import prison.PrisonMain;
 import prison.PrisonPlayer;
-import prison.PrisonScoreboard;
-import prison.PrisonUpgrade;
 
 import java.util.Arrays;
 
 public class LevelMenu {
+
     private ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE);
     private ItemStack star = new ItemStack(Material.NETHER_STAR);
     private ItemMeta starmeta = star.getItemMeta();

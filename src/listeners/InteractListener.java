@@ -1,9 +1,6 @@
 package listeners;
 
-import menu.FractionMenu;
-import menu.LevelMenu;
-import menu.MineMenu;
-import menu.UpgradeMenu;
+import menu.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -22,8 +19,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffectType;
 import prison.PrisonMain;
 import prison.PrisonPlayer;
-import prison.PrisonScoreboard;
-
 import java.util.Random;
 
 public class InteractListener implements Listener {
@@ -89,7 +84,7 @@ public class InteractListener implements Listener {
                     PrisonMain.getInstance().setGLOBAL_MONEY_BOOSTER(2);
                     PrisonMain.getInstance().setMONEY_BOOSTER_END(60 * 30);
                     Bukkit.broadcastMessage(PrisonMain.getInstance().getInfoPrefix() + p.getName() + " активировал бустер денег на 30 минут.");
-                } else if (itemStack.getType().equals(Material.BOOK) && ChatColor.stripColor(itemStack.getItemMeta().getDisplayName()).equalsIgnoreCase("Подвал")) {
+                } else if (itemStack.getType().equals(Material.BOOK) && ChatColor.stripColor(itemStack.getItemMeta().getDisplayName()).toLowerCase().contains("подвал")) {
                     PrisonMain.getInstance().deleteOneItem(p);
                     PrisonMain.getInstance().getStats().get(p.getUniqueId()).setCanEnter(1);
                 }
@@ -114,7 +109,7 @@ public class InteractListener implements Listener {
         ItemStack item = e.getCurrentItem();
         if (open == null || item == null)
             return;
-        if (item.getType().equals(Material.STAINED_GLASS_PANE)) {
+        if (item.getType().equals(Material.STAINED_GLASS_PANE) || item.getType().equals(Material.PAPER)) {
             e.setCancelled(true);
             return;
         }
@@ -133,6 +128,10 @@ public class InteractListener implements Listener {
                 break;
             case  "выбор фракции":
                 FractionMenu.getInstance().menuHandler(p, item);
+                e.setCancelled(true);
+                break;
+            case "магазин":
+                ShopMenu.getInstance().menuHandler(p, item);
                 e.setCancelled(true);
                 break;
         }

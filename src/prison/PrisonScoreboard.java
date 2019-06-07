@@ -1,7 +1,6 @@
 package prison;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
@@ -24,11 +23,11 @@ public class PrisonScoreboard {
         PrisonPlayer player = PrisonMain.getInstance().getStats().get(p.getUniqueId());
         Score empty = objective.getScore("");
         empty.setScore(12);
-        Score level = objective.getScore("§f§lУровень: §a" + player.getLevel());
+        Score level = objective.getScore("§f§lУровень: §b" + player.getLevel());
         level.setScore(11);
         Score blocks = objective.getScore("§f§lБлоков: §6" + player.getBlocksValue());
         blocks.setScore(10);
-        Score coins = objective.getScore("§f§lДенег: §6" + player.getGold() + "$");
+        Score coins = objective.getScore("§f§lДенег: §a" + player.getGold() + "$");
         coins.setScore(9);
         Score rats = objective.getScore("§f§lКрыс: §c" + player.getRatsValue());
         rats.setScore(8);
@@ -44,7 +43,7 @@ public class PrisonScoreboard {
         }
         Score empty1 = objective.getScore("  ");
         empty1.setScore(1);
-        Score site = objective.getScore("§f§l   www.§5§ljumpbox§f§l.ru");
+        Score site = objective.getScore("§f§l   www.§5§lhentai-heaven§f§l.org");
         site.setScore(0);
 
         p.setScoreboard(objective.getScoreboard());
@@ -61,11 +60,11 @@ public class PrisonScoreboard {
         PrisonPlayer player = PrisonMain.getInstance().getStats().get(p.getUniqueId());
         Score empty = objective.getScore("");
         empty.setScore(12);
-        Score level = objective.getScore("§f§lУровень: §a" + player.getLevel());
+        Score level = objective.getScore("§f§lУровень: §b" + player.getLevel());
         level.setScore(11);
         Score blocks = objective.getScore("§f§lБлоков: §6" + player.getBlocksValue());
         blocks.setScore(10);
-        Score coins = objective.getScore("§f§lДенег: §6" + player.getGold() + "$");
+        Score coins = objective.getScore("§f§lДенег: §a" + player.getGold() + "$");
         coins.setScore(9);
         Score rats = objective.getScore("§f§lКрыс: §c" + player.getRatsValue());
         rats.setScore(8);
@@ -89,7 +88,7 @@ public class PrisonScoreboard {
         }
         Score empty1 = objective.getScore("  ");
         empty1.setScore(1);
-        Score site = objective.getScore("§f§l   www.§5§ljumpbox§f§l.ru");
+        Score site = objective.getScore("§f§l   www.§5§lhentai-heaven§f§l.org");
         site.setScore(0);
 
          p.setScoreboard(objective.getScoreboard());

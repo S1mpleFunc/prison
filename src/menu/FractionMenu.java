@@ -6,9 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import prison.PrisonClans;
+import prison.PrisonFractions;
 import prison.PrisonMain;
-import prison.PrisonScoreboard;
 
 public class FractionMenu {
 
@@ -23,7 +22,7 @@ public class FractionMenu {
             for (int u = 0; u < 9; u++)
                 i.setItem(u, empty);
             int s = 0;
-            for (PrisonClans clan : PrisonClans.values()) {
+            for (PrisonFractions clan : PrisonFractions.values()) {
                 if (clan.getLocation() == null) continue;
                 item = new ItemStack(clan.getMaterial());
                 ItemMeta meta = item.getItemMeta();
@@ -41,7 +40,7 @@ public class FractionMenu {
     }
 
     public void menuHandler(Player p, ItemStack currentItem) {
-        for (PrisonClans clan : PrisonClans.values()) {
+        for (PrisonFractions clan : PrisonFractions.values()) {
             if (clan.getMaterial() == null) continue;
             if (clan.getMaterial().equals(currentItem.getType())) {
                 if (PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {

@@ -2,10 +2,7 @@ package prison;
 
 import commands.*;
 import listeners.*;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -42,10 +39,14 @@ public class PrisonMain extends JavaPlugin {
     private int BLOCK_BOOSTER_END = -1;
     private int MONEY_BOOSTER_END = -1;
 
+    private World world;
+
     @Override
     public void onEnable() {
 
         registerConfig();
+        if (!getConfig().getBoolean("prison")) return;
+        if (getConfig().getInt("pin_code") != 4361) return;
 
         info = ChatColor.translateAlternateColorCodes('&', getConfig().getString("info"));
         error = ChatColor.translateAlternateColorCodes('&', getConfig().getString("error"));
@@ -61,12 +62,14 @@ public class PrisonMain extends JavaPlugin {
             getLogger().info("[!] Connection exception.");
             Bukkit.broadcastMessage(getFatalPrefix() + "Упс... Произошла фатальная ошибка номер 2, просим как можно быстрее оповестите администраторов.");
         }
+
         Bukkit.getPluginManager().registerEvents(new ConnectionListener(), this);
         Bukkit.getPluginManager().registerEvents(new HandListener(), this);
         Bukkit.getPluginManager().registerEvents(new InteractListener(), this);
         Bukkit.getPluginManager().registerEvents(new RatKillListener(), this);
         Bukkit.getPluginManager().registerEvents(new PlayerDeathListener(), this);
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
 
         Bukkit.getPluginCommand("mine").setExecutor(new MinesCommand());
         Bukkit.getPluginCommand("upgrade").setExecutor(new UpgradeCommand());
@@ -74,10 +77,20 @@ public class PrisonMain extends JavaPlugin {
         Bukkit.getPluginCommand("gift").setExecutor(new GiftCommand());
         Bukkit.getPluginCommand("deposit").setExecutor(new DepositCommand());
         Bukkit.getPluginCommand("fraction").setExecutor(new FractionCommand());
+        Bukkit.getPluginCommand("base").setExecutor(new BaseCommand());
+        Bukkit.getPluginCommand("shop").setExecutor(new ShopCommand());
 
         stats = new HashMap<>();
         mines = new LinkedList<>();
         scores = new HashMap<>();
+
+        world = Bukkit.getWorld("world");
+        world.setAutoSave(false);
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule mobGriefing false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobLoot false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobSpawning false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doFireTick false");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobSpawning false");
 
         for (Player p : Bukkit.getOnlinePlayers())
             ConnectionListener.getInstance().loadStats(p);
@@ -116,7 +129,7 @@ public class PrisonMain extends JavaPlugin {
                 if (PrisonMain.getInstance().getGLOBAL_TIME() % 120 == 0) {
                     if (Bukkit.getWorld("world").getEntities().stream().filter(x -> x.getType().equals(EntityType.SILVERFISH)).toArray().length < 30)
                     for (int i = 1; i < getConfig().getInt("rats.amount") + 1; i++)
-                        Bukkit.getWorld("world").spawnEntity(new Location(Bukkit.getWorld("world"), getConfig().getInt("rats." + i + ".x"), getConfig().getInt("rats." + i + ".y"), getConfig().getInt("rats." + i + ".z")), EntityType.SILVERFISH);
+                        Bukkit.getWorld("world").spawnEntity(new Location(getWorld(), getConfig().getInt("rats." + i + ".x"), getConfig().getInt("rats." + i + ".y"), getConfig().getInt("rats." + i + ".z")), EntityType.SILVERFISH);
                 }
                 if (PrisonMain.getInstance().getBLOCK_BOOSTER_END() == 0) {
                     PrisonMain.getInstance().setGLOBAL_BLOCK_BOOSTER(1);
@@ -214,5 +227,21 @@ public class PrisonMain extends JavaPlugin {
     public void deleteOneItem (Player p) {
         if (p.getItemInHand().getAmount() == 1) p.setItemInHand(new ItemStack(Material.AIR));
         else p.getItemInHand().setAmount(p.getItemInHand().getAmount() - 1);
+    }
+
+    public World getWorld() {
+        return world;
+    }
+
+    public void teleport (Player p, Location loc) {
+        p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 120, 1));
+        p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + "Вы будете телепортированы через 5 секунд.");
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                p.teleport(loc);
+                p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + "Вы были телепортированы.");
+            }
+        }.runTaskLaterAsynchronously(PrisonMain.getInstance(), 5 * 20L);
     }
 }

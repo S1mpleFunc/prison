@@ -1,7 +1,6 @@
 package listeners;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,7 +9,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import prison.PrisonClans;
+import prison.PrisonFractions;
 import prison.PrisonMain;
 import prison.PrisonPlayer;
 import prison.PrisonScoreboard;
@@ -69,7 +68,7 @@ public class ConnectionListener implements Listener {
                         rs.getInt("kills"),
                         rs.getInt("deaths"),
                         rs.getString("blocks"),
-                        PrisonClans.getByName(rs.getString("clan")),
+                        PrisonFractions.getByName(rs.getString("clan")),
                         rs.getInt("enter"))
                 );
             } else {

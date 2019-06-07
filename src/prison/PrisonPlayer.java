@@ -13,18 +13,18 @@ public class PrisonPlayer {
     private int kills;
     private int deaths;
     private String blocks;
-    private PrisonClans prisonClans;
+    private PrisonFractions prisonFractions;
     private int canEnter;
 
     //                       id	        uuid	  gold	    level	   kills	  deaths	blocks
-    public PrisonPlayer (int id, float gold, int level, int kills, int deaths,  String blocks, PrisonClans prisonClans, int canEnter) {
+    public PrisonPlayer (int id, float gold, int level, int kills, int deaths,  String blocks, PrisonFractions prisonFractions, int canEnter) {
         this.id = id;
         this.gold = gold;
         this.level = level;
         this.kills = kills;
         this.deaths = deaths;
         this.blocks = blocks;
-        this.prisonClans = prisonClans;
+        this.prisonFractions = prisonFractions;
         this.canEnter = canEnter;
     }
 
@@ -96,20 +96,20 @@ public class PrisonPlayer {
     public void setLevel(int level) {
         this.level = level;
     }
-    public void setClan(PrisonClans prisonClans) {
-        this.prisonClans = prisonClans;
+    public void setClan(PrisonFractions prisonFractions) {
+        this.prisonFractions = prisonFractions;
     }
     public void setCanEnter(int canEnter) {
         this.canEnter = canEnter;
     }
 
     public String getPrisonClanName() {
-        return prisonClans.getName();
+        return prisonFractions.getName();
     }
-    public PrisonClans getPrisonClans() {
-        return prisonClans;
+    public PrisonFractions getPrisonClans() {
+        return prisonFractions;
     }
     public Location getPrisonClansLocation() {
-        return prisonClans.getLocation();
+        return prisonFractions.getLocation();
     }
 }

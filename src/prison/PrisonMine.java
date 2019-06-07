@@ -1,6 +1,5 @@
 package prison;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -44,7 +43,7 @@ public class PrisonMine {
 
                 Random random = new Random();
 
-                Location loc = new Location(Bukkit.getWorld("world"), mine.getX(), mine.getY(), mine.getZ());
+                Location loc = new Location(PrisonMain.getInstance().getWorld(), mine.getX(), mine.getY(), mine.getZ());
                 int diametr = mine.getDiametr();
 
                 for (int i = 0; i < mine.getHeight(); i++) {
@@ -98,6 +97,6 @@ public class PrisonMine {
     }
 
     public Location getMineLocation() {
-        return new Location(Bukkit.getWorld("world"), this.tpx, this.tpy, this.tpz);
+        return new Location(PrisonMain.getInstance().getWorld(), this.tpx, this.tpy, this.tpz);
     }
 }

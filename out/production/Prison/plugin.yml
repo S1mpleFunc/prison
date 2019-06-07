@@ -15,3 +15,7 @@ commands:
     usage:
   fraction:
     usage:
+  base:
+    usage:
+  shop:
+    usage:
