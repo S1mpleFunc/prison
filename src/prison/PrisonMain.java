@@ -3,7 +3,9 @@ package prison;
 import commands.*;
 import listeners.*;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,14 +13,12 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scoreboard.Objective;
+import org.bukkit.util.Vector;
 import sql.MySQL;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Random;
-import java.util.UUID;
+import java.util.*;
 
 public class PrisonMain extends JavaPlugin {
 
@@ -27,6 +27,7 @@ public class PrisonMain extends JavaPlugin {
     private HashMap<UUID, PrisonPlayer> stats;
     private LinkedList<PrisonMine> mines;
     private HashMap<UUID, Objective> scores;
+    private LinkedList<LivingEntity> bosses;
 
     private String info;
     private String error;
@@ -83,14 +84,13 @@ public class PrisonMain extends JavaPlugin {
         stats = new HashMap<>();
         mines = new LinkedList<>();
         scores = new HashMap<>();
+        bosses = new LinkedList<>();
 
         world = Bukkit.getWorld("world");
         world.setAutoSave(false);
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule mobGriefing false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobLoot false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobSpawning false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doFireTick false");
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "gamerule doMobSpawning false");
+        world.setTime(6000);
+        world.setMonsterSpawnLimit(0);
+        world.setAnimalSpawnLimit(0);
 
         for (Player p : Bukkit.getOnlinePlayers())
             ConnectionListener.getInstance().loadStats(p);
@@ -113,23 +113,25 @@ public class PrisonMain extends JavaPlugin {
                     getConfig().getInt("mines." + (i+1) + ".tpz")));
             mines.get(i).updateMine(mines.get(i));
         }
+        PrisonBosses.updeteBosses();
         new BukkitRunnable() {
             @Override
             public void run() {
                 PrisonMain.getInstance().incLOBAL_TIME();
+                world.setTime(0);
                 Random random = new Random();
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     PrisonScoreboard.getInstance().updateScoreboard(p);
                     if (PrisonMain.getInstance().getGLOBAL_TIME() % 900 == 0) {
-                        int effect = random.nextInt(PrisonMain.getInstance().getConfig().getInt("needs.amount")) + 1;
+                        int effect = random.nextInt(PrisonMain.getInstance().getConfig().getInt("needs.amount") - 1) + 1;
                         p.addPotionEffect(new PotionEffect(PotionEffectType.getByName(PrisonMain.getInstance().getConfig().getString("needs." + effect + ".effect")), 100000, 3));
                         p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + PrisonMain.getInstance().getConfig().getString("needs." + effect + ".message"));
                     }
                 }
                 if (PrisonMain.getInstance().getGLOBAL_TIME() % 120 == 0) {
-                    if (Bukkit.getWorld("world").getEntities().stream().filter(x -> x.getType().equals(EntityType.SILVERFISH)).toArray().length < 30)
-                    for (int i = 1; i < getConfig().getInt("rats.amount") + 1; i++)
-                        Bukkit.getWorld("world").spawnEntity(new Location(getWorld(), getConfig().getInt("rats." + i + ".x"), getConfig().getInt("rats." + i + ".y"), getConfig().getInt("rats." + i + ".z")), EntityType.SILVERFISH);
+                    if (Bukkit.getWorld("world").getEntities().stream().filter(x -> x.getType().equals(EntityType.SILVERFISH)).toArray().length < 20)
+                        for (int i = 1; i < getConfig().getInt("rats.amount") + 1; i++)
+                            Bukkit.getWorld("world").spawnEntity(new Location(getWorld(), getConfig().getInt("rats." + i + ".x"), getConfig().getInt("rats." + i + ".y"), getConfig().getInt("rats." + i + ".z")), EntityType.SILVERFISH);
                 }
                 if (PrisonMain.getInstance().getBLOCK_BOOSTER_END() == 0) {
                     PrisonMain.getInstance().setGLOBAL_BLOCK_BOOSTER(1);
@@ -167,6 +169,10 @@ public class PrisonMain extends JavaPlugin {
 
     public HashMap<UUID, PrisonPlayer> getStats() {
         return stats;
+    }
+
+    public LinkedList<LivingEntity> getBosses() {
+        return bosses;
     }
 
     public HashMap<UUID, Objective> getScores() {
@@ -243,5 +249,13 @@ public class PrisonMain extends JavaPlugin {
                 p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + "Вы были телепортированы.");
             }
         }.runTaskLaterAsynchronously(PrisonMain.getInstance(), 5 * 20L);
+    }
+    public void dropPlayerAround (Player p, Location center, double power) {
+        Location playerLocation = p.getLocation();
+        double x = (playerLocation.getX() - center.getX()) * 10;
+        double y = playerLocation.getY() - 30;
+        double z = (playerLocation.getZ() - center.getZ()) * 10;
+
+        p.setVelocity(new Vector(x,y,z).multiply(power));
     }
 }

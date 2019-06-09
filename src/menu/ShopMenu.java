@@ -38,12 +38,12 @@ public class ShopMenu {
             //Заполнение инвентаря стеклом и головами игроков
             for (int u = 0; u < 9; u++)
                 i.setItem(u, empty);
-            for (int u = 1; u < PrisonMain.getInstance().getConfig().getInt("shop.items_amount") + 3; u++) {
+            for (int u = 1; u < PrisonMain.getInstance().getConfig().getInt("shop.items_amount") + 1; u++) {
                 ItemStack item = new ItemStack(Material.getMaterial(PrisonMain.getInstance().getConfig().getString("shop." + u +".material")),
                                                PrisonMain.getInstance().getConfig().getInt("shop." + u +".amount"));
                 ItemMeta meta = item.getItemMeta();
                 meta.setDisplayName(PrisonMain.getInstance().getConfig().getString("shop." + u +".name"));
-                meta.setLore(Arrays.asList("", "§f§lЦена: §a" + PrisonMain.getInstance().getConfig().getInt("shop." + u +".cost") + "$", "§7У вас денег: " + prisonPlayer.getGold() + "$"));
+                meta.setLore(Arrays.asList("", "§f§lЦена: §a" + PrisonMain.getInstance().getConfig().getDouble("shop." + u +".cost") + "$", "§7У вас денег: " + prisonPlayer.getGold() + "$"));
                 item.setItemMeta(meta);
                 i.setItem(18 + u, item);
             }
@@ -58,7 +58,7 @@ public class ShopMenu {
 
     public void menuHandler(Player p, ItemStack itemStack) {
         PrisonPlayer prisonPlayer = PrisonMain.getInstance().getStats().get(p.getUniqueId());
-        int cost = Integer.parseInt(ChatColor.stripColor(itemStack.getItemMeta().getLore().get(1).split(" ")[1]).replace("$", ""));
+        float cost = Float.parseFloat(ChatColor.stripColor(itemStack.getItemMeta().getLore().get(1).split(" ")[1]).replace("$", ""));
 
         if (prisonPlayer.getGold() < cost) {
             p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Вам не хватает " + (cost - prisonPlayer.getGold()) + "$.");

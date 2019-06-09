@@ -40,6 +40,7 @@ public class HandListener implements Listener {
                 @Override
                 public void run() {
                     block.setType(Material.LOG);
+                    block.setData((byte) 13);
                 }
             }.runTaskLater(PrisonMain.getInstance(), 10 * 20L);
         }
@@ -51,6 +52,7 @@ public class HandListener implements Listener {
         }
         block.setType(Material.AIR);
         e.setCancelled(true);
+        p.updateInventory();
     }
     @EventHandler
     public void onBlockPlace (BlockPlaceEvent e) {

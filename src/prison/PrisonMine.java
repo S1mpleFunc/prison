@@ -1,8 +1,13 @@
 package prison;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.Random;
 
@@ -45,6 +50,17 @@ public class PrisonMine {
 
                 Location loc = new Location(PrisonMain.getInstance().getWorld(), mine.getX(), mine.getY(), mine.getZ());
                 int diametr = mine.getDiametr();
+                Location endLoc = new Location(PrisonMain.getInstance().getWorld(), mine.getX() - diametr, mine.getY() - mine.getHeight(), mine.getZ() - diametr);
+
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    Location plyerLoc = p.getLocation();
+                    if (plyerLoc.getX() - endLoc.getX() <  diametr && plyerLoc.getX() - loc.getX() <  diametr &&
+                            plyerLoc.getY() - endLoc.getY() <  diametr && plyerLoc.getY() - loc.getY() <  diametr) {
+                        p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + "Вы был перемещенны вверх.");
+                        plyerLoc.setY(loc.getY() + 1);
+                        p.teleport(plyerLoc);
+                    }
+                }
 
                 for (int i = 0; i < mine.getHeight(); i++) {
                     for (int q = 0; q < diametr; q++) {

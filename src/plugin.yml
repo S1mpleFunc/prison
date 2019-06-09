@@ -1,7 +1,9 @@
 main: prison.PrisonMain
 author: func
-version: 1.32
+version: 1.37
+website: https://vk.com/funcid
 name: Prison
+description: '§cХочу стать девочкой-волшебницей.'
 commands:
   mine:
     usage:
