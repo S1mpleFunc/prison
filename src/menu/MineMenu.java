@@ -9,23 +9,27 @@ import org.bukkit.inventory.meta.ItemMeta;
 import prison.PrisonMain;
 import prison.PrisonMine;
 import prison.PrisonPlayer;
+import prison.PrisonVariables;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.UUID;
 
 public class MineMenu {
 
-    ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE);
-    ItemStack none = new ItemStack(Material.STAINED_CLAY);
-    ItemMeta nonemeta = none.getItemMeta();
-    ItemStack infolist = new ItemStack(Material.PAPER);
-    ItemMeta infometa = infolist.getItemMeta();
+    private ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE);
+    private ItemStack none = new ItemStack(Material.STAINED_CLAY);
+    private ItemMeta nonemeta = none.getItemMeta();
+    private ItemStack infolist = new ItemStack(Material.PAPER);
+    private ItemMeta infometa = infolist.getItemMeta();
 
     public void openPlayerGUI (Player p) {
-        if (PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
+        if (((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).containsKey(p.getUniqueId())) {
             nonemeta.setDisplayName("§c§lНЕДОСТУПНО");
             none.setItemMeta(nonemeta);
 
-            PrisonPlayer prisonPlayer = PrisonMain.getInstance().getStats().get(p.getUniqueId());
+            PrisonPlayer prisonPlayer = ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId());
 
             infometa.setDisplayName("§lИнформация §e§l" + p.getName());
             infometa.setLore(Arrays.asList("",
@@ -45,9 +49,9 @@ public class MineMenu {
                 i.setItem(u, empty);
             for (int u = 19; u < 26; u++)
                 i.setItem(u, none);
-            for (int j = 0; j < PrisonMain.getInstance().getMines().size(); j++) {
+            for (int j = 0; j < ((LinkedList<PrisonMine>)PrisonVariables.MINES.getO()).size(); j++) {
                 if (j == 0 && prisonPlayer.isCanEnter() == 0) continue;
-                PrisonMine prisonMine = PrisonMain.getInstance().getMines().get(j);
+                PrisonMine prisonMine = ((LinkedList<PrisonMine>)PrisonVariables.MINES.getO()).get(j);
                 if (prisonPlayer.getLevel() >= prisonMine.getMlevel()) {
                     ItemStack mine = new ItemStack(prisonMine.getMaterial());
                     ItemMeta minemeta = mine.getItemMeta();
@@ -68,16 +72,13 @@ public class MineMenu {
                 i.setItem(u, empty);
             p.openInventory(i);
         } else
-            p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Упс... Произошла ошибка номер 6, обратитесь к персоналу сообщив номер ошибки.");
+            p.sendMessage(PrisonVariables.ERROR.getO() + "Упс... Произошла ошибка номер 6, обратитесь к персоналу сообщив номер ошибки.");
     }
 
     public void menuHandler(Player p, ItemStack item) {
         Material type = item.getType();
-        PrisonMain.getInstance().getMines().stream().filter(mine -> mine.getMaterial().equals(type)).forEach(mine -> PrisonMain.getInstance().teleport(p, mine.getMineLocation()));
+        ((LinkedList<PrisonMine>)PrisonVariables.MINES.getO()).stream().filter(mine -> mine.getMaterial().equals(type)).forEach(mine -> PrisonMain.getInstance().teleport(p, mine.getMineLocation()));
 
         p.closeInventory();
-    }
-    public static MineMenu getInstance () {
-        return new MineMenu();
     }
 }

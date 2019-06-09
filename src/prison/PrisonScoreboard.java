@@ -1,9 +1,12 @@
 package prison;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.UUID;
 
 public class PrisonScoreboard {
 
@@ -16,12 +19,12 @@ public class PrisonScoreboard {
         Objective objective = board.registerNewObjective("board", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName("§6§lPRISON");
-        PrisonMain.getInstance().getScores().put(p.getUniqueId(), objective);
-        if (!PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
-            p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Перезайдите на сервер.");
+        ((HashMap<UUID, Objective>)PrisonVariables.SCORES.getO()).put(p.getUniqueId(), objective);
+        if (!((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).containsKey(p.getUniqueId())) {
+            p.sendMessage(PrisonVariables.ERROR.getO() + "Перезайдите на сервер.");
             return;
         }
-        PrisonPlayer player = PrisonMain.getInstance().getStats().get(p.getUniqueId());
+        PrisonPlayer player = ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId());
         Score empty = objective.getScore("");
         empty.setScore(14);
         Score level = objective.getScore("§f§lУровень: §b" + player.getLevel());
@@ -48,15 +51,15 @@ public class PrisonScoreboard {
         p.setScoreboard(objective.getScoreboard());
     }
     public void updateScoreboard (Player p) {
-        Objective objective = PrisonMain.getInstance().getScores().get(p.getUniqueId());
-        if (!PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
-            p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Перезайдите на сервер.");
+        Objective objective = ((HashMap<UUID, Objective>)PrisonVariables.SCORES.getO()).get(p.getUniqueId());
+        if (!((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).containsKey(p.getUniqueId())) {
+            p.sendMessage(PrisonVariables.ERROR.getO() + "Перезайдите на сервер.");
             return;
         }
         for (String s : p.getScoreboard().getEntries())
             objective.getScoreboard().resetScores(s);
 
-        PrisonPlayer player = PrisonMain.getInstance().getStats().get(p.getUniqueId());
+        PrisonPlayer player = ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId());
         Score empty = objective.getScore("");
         empty.setScore(14);
         Score level = objective.getScore("§fУровень: §b" + player.getLevel());
@@ -74,15 +77,15 @@ public class PrisonScoreboard {
         if (p.isOp()) {
             Score empty1 = objective.getScore(" ");
             empty1.setScore(7);
-            Score time = objective.getScore("§7Непрерывно работает: " + PrisonMain.getInstance().formatTime(PrisonMain.getInstance().getGLOBAL_TIME()));
+            Score time = objective.getScore("§7Непрерывно работает: " + PrisonMain.getInstance().formatTime((int)PrisonVariables.GLOBAL_TIME.getO()));
             time.setScore(6);
         }
-        if (PrisonMain.getInstance().getBLOCK_BOOSTER_END() > 0) {
-            Score block = objective.getScore("§6§lБустер блоков: §f§l" + PrisonMain.getInstance().formatTime(PrisonMain.getInstance().getBLOCK_BOOSTER_END()));
+        if ((int)PrisonVariables.BLOCK_BOOSTER_END.getO() > 0) {
+            Score block = objective.getScore("§6§lБустер блоков: §f§l" + PrisonMain.getInstance().formatTime((int)PrisonVariables.BLOCK_BOOSTER_END.getO()));
             block.setScore(5);
         }
-        if (PrisonMain.getInstance().getMONEY_BOOSTER_END() > 0) {
-            Score money = objective.getScore("§6§lБустер денег: §f§l" + PrisonMain.getInstance().formatTime(PrisonMain.getInstance().getMONEY_BOOSTER_END()));
+        if ((int)PrisonVariables.MONEY_BOOSTER_END.getO() > 0) {
+            Score money = objective.getScore("§6§lБустер денег: §f§l" + PrisonMain.getInstance().formatTime((int)PrisonVariables.MONEY_BOOSTER_END.getO()));
             money.setScore(4);
         }
         Score empty2 = objective.getScore("  ");

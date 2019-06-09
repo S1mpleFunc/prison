@@ -8,8 +8,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import prison.PrisonMain;
 import prison.PrisonPlayer;
+import prison.PrisonVariables;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class LevelMenu {
 
@@ -18,9 +21,9 @@ public class LevelMenu {
     private ItemMeta starmeta = star.getItemMeta();
 
     public void openPlayerGUI (Player p) {
-        if (PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
+        if (((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).containsKey(p.getUniqueId())) {
 
-            PrisonPlayer prisonPlayer = PrisonMain.getInstance().getStats().get(p.getUniqueId());
+            PrisonPlayer prisonPlayer = ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId());
 
             starmeta.setDisplayName("§f" + prisonPlayer.getLevel() + " >> §b§l" + (prisonPlayer.getLevel()+1) + "§7 >> " + (prisonPlayer.getLevel()+2));
             starmeta.setLore(Arrays.asList("§f§lЦена: §6§l" + PrisonMain.getInstance().getConfig().getInt("level." + (prisonPlayer.getLevel() + 1) + ".price") + "$.",
@@ -41,33 +44,30 @@ public class LevelMenu {
             //Открытие игрока
             p.openInventory(i);
         } else
-            p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Упс... Произошла ошибка номер 7, обратитесь к персоналу сообщив номер ошибки.");
+            p.sendMessage(PrisonVariables.ERROR.getO() + "Упс... Произошла ошибка номер 7, обратитесь к персоналу сообщив номер ошибки.");
     }
 
     public void menuHandler(Player p) {
         //Обработка возможных предметов
         try {
-            PrisonPlayer prisonPlayer = PrisonMain.getInstance().getStats().get(p.getUniqueId());
+            PrisonPlayer prisonPlayer = ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId());
             int price = PrisonMain.getInstance().getConfig().getInt("level." + (prisonPlayer.getLevel() + 1) + ".price");
             int blocks = PrisonMain.getInstance().getConfig().getInt("level." + (prisonPlayer.getLevel() + 1) + ".blocks");
             if (prisonPlayer.getGold() < price) {
-                p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Вам не хватает " + (price - prisonPlayer.getGold()) + "$.");
+                p.sendMessage(PrisonVariables.ERROR.getO() + "Вам не хватает " + (price - prisonPlayer.getGold()) + "$.");
                 return;
             }
             if (prisonPlayer.getBlocksValue() < blocks) {
-                p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Вам не хватает " + (blocks - prisonPlayer.getBlocksValue()) + " блоков.");
+                p.sendMessage(PrisonVariables.ERROR.getO() + "Вам не хватает " + (blocks - prisonPlayer.getBlocksValue()) + " блоков.");
                 return;
             }
             prisonPlayer.setGold(prisonPlayer.getGold() - price);
             prisonPlayer.setLevel(prisonPlayer.getLevel() + 1);
-            p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + "Теперь у вас §b" + prisonPlayer.getLevel() + "§7 уровень");
-            p.setMaxHealth(21 + PrisonMain.getInstance().getStats().get(p.getUniqueId()).getLevel());
+            p.sendMessage(PrisonVariables.INFO.getO() + "Теперь у вас §b" + prisonPlayer.getLevel() + "§7 уровень");
+            p.setMaxHealth(21 + ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId()).getLevel());
         } catch (Exception e) {
-            p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Упс... Произошла ошибка номер 8, обратитесь к персоналу сообщив номер ошибки.");
+            p.sendMessage(PrisonVariables.INFO.getO() + "Упс... Произошла ошибка номер 8, обратитесь к персоналу сообщив номер ошибки.");
         }
         p.closeInventory();
-    }
-    public static LevelMenu getInstance () {
-        return new LevelMenu();
     }
 }

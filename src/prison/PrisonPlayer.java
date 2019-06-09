@@ -4,7 +4,7 @@ import org.bukkit.Location;
 
 public class PrisonPlayer {
 
-    String block[];
+    private String block[];
 
     //Создание класса хранящего всю статистику игрока
     private int id;
@@ -57,7 +57,7 @@ public class PrisonPlayer {
 
         for (int i = 0; i < block.length; i++) {
             if (block[i].equalsIgnoreCase(material)) {
-                value = Integer.parseInt(block[ i + 1 ]) + 1 * PrisonMain.getInstance().getGLOBAL_BLOCK_BOOSTER();
+                value = Integer.parseInt(block[ i + 1 ]) + 1 * (int)PrisonVariables.GLOBAL_BLOCK_BOOSTER.getO();
                 block[i + 1] = value.toString();
             }
             string += block[i] + " ";

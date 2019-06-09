@@ -9,20 +9,23 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import prison.PrisonMain;
 import prison.PrisonPlayer;
+import prison.PrisonVariables;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class ShopMenu {
 
-    ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE);
-    ItemStack infolist = new ItemStack(Material.PAPER);
-    ItemMeta infometa = infolist.getItemMeta();
+    private ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE);
+    private ItemStack infolist = new ItemStack(Material.PAPER);
+    private ItemMeta infometa = infolist.getItemMeta();
 
     public void openPlayerGUI (Player p) {
-        if (PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
+        if (((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).containsKey(p.getUniqueId())) {
 
-            PrisonPlayer prisonPlayer = PrisonMain.getInstance().getStats().get(p.getUniqueId());
+            PrisonPlayer prisonPlayer = ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId());
             infometa.setDisplayName("§lИнформация §e§l" + p.getName());
             infometa.setLore(Arrays.asList("",
                     "§f* Уровень: §b§l" + prisonPlayer.getLevel(),
@@ -38,12 +41,13 @@ public class ShopMenu {
             //Заполнение инвентаря стеклом и головами игроков
             for (int u = 0; u < 9; u++)
                 i.setItem(u, empty);
-            for (int u = 1; u < PrisonMain.getInstance().getConfig().getInt("shop.items_amount") + 1; u++) {
+            for (int u = 1; u < PrisonMain.getInstance().getConfig().getInt("shop.amount") + 1; u++) {
                 ItemStack item = new ItemStack(Material.getMaterial(PrisonMain.getInstance().getConfig().getString("shop." + u +".material")),
                                                PrisonMain.getInstance().getConfig().getInt("shop." + u +".amount"));
                 ItemMeta meta = item.getItemMeta();
                 meta.setDisplayName(PrisonMain.getInstance().getConfig().getString("shop." + u +".name"));
                 meta.setLore(Arrays.asList("", "§f§lЦена: §a" + PrisonMain.getInstance().getConfig().getDouble("shop." + u +".cost") + "$", "§7У вас денег: " + prisonPlayer.getGold() + "$"));
+                meta.spigot().setUnbreakable(true);
                 item.setItemMeta(meta);
                 i.setItem(18 + u, item);
             }
@@ -53,18 +57,18 @@ public class ShopMenu {
             //Открытие игрока
             p.openInventory(i);
         } else
-            p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Упс... Произошла ошибка номер 7, обратитесь к персоналу сообщив номер ошибки.");
+            p.sendMessage(PrisonVariables.ERROR.getO() + "Упс... Произошла ошибка номер 7, обратитесь к персоналу сообщив номер ошибки.");
     }
 
     public void menuHandler(Player p, ItemStack itemStack) {
-        PrisonPlayer prisonPlayer = PrisonMain.getInstance().getStats().get(p.getUniqueId());
+        PrisonPlayer prisonPlayer = ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId());
         float cost = Float.parseFloat(ChatColor.stripColor(itemStack.getItemMeta().getLore().get(1).split(" ")[1]).replace("$", ""));
 
         if (prisonPlayer.getGold() < cost) {
-            p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Вам не хватает " + (cost - prisonPlayer.getGold()) + "$.");
+            p.sendMessage(PrisonVariables.ERROR.getO() + "Вам не хватает " + (cost - prisonPlayer.getGold()) + "$.");
             return;
         }
-        p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + "Вы потратили " + cost + "$.");
+        p.sendMessage(PrisonVariables.INFO.getO() + "Вы потратили " + cost + "$.");
         prisonPlayer.setGold(prisonPlayer.getGold() - cost);
         ItemMeta meta = itemStack.getItemMeta();
         meta.setLore(Arrays.asList("", "§7§lПриобретено игроком " + p.getName(), "§7§l" + new Date()));
@@ -72,8 +76,5 @@ public class ShopMenu {
         p.getInventory().addItem(itemStack);
         p.updateInventory();
         p.closeInventory();
-    }
-    public static ShopMenu getInstance () {
-        return new ShopMenu();
     }
 }

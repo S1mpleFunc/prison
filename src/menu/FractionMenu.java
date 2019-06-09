@@ -7,7 +7,11 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import prison.PrisonFractions;
-import prison.PrisonMain;
+import prison.PrisonPlayer;
+import prison.PrisonVariables;
+
+import java.util.HashMap;
+import java.util.UUID;
 
 public class FractionMenu {
 
@@ -15,7 +19,7 @@ public class FractionMenu {
     private ItemStack item;
 
     public void openPlayerGUI (Player p) {
-        if (PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
+        if (((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).containsKey(p.getUniqueId())) {
 
             Inventory i = Bukkit.createInventory(null, 27, "§b§lВыбор фракции");
 
@@ -36,26 +40,23 @@ public class FractionMenu {
             //Открытие игрока
             p.openInventory(i);
         } else
-            p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Упс... Произошла ошибка номер 9, обратитесь к персоналу сообщив номер ошибки.");
+            p.sendMessage(PrisonVariables.ERROR.getO() + "Упс... Произошла ошибка номер 9, обратитесь к персоналу сообщив номер ошибки.");
     }
 
     public void menuHandler(Player p, ItemStack currentItem) {
         for (PrisonFractions clan : PrisonFractions.values()) {
             if (clan.getMaterial() == null) continue;
             if (clan.getMaterial().equals(currentItem.getType())) {
-                if (PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
-                    if (PrisonMain.getInstance().getStats().get(p.getUniqueId()).getLevel() > 5)
-                        PrisonMain.getInstance().getStats().get(p.getUniqueId()).setClan(clan);
+                if (((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).containsKey(p.getUniqueId())) {
+                    if (((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId()).getLevel() > 5)
+                        ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId()).setClan(clan);
 
                     else
-                        p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Нужен хотя бы 6 уровень.");
+                        p.sendMessage(PrisonVariables.ERROR.getO() + "Нужен хотя бы 6 уровень.");
                 }
             }
         }
 
         p.closeInventory();
-    }
-    public static FractionMenu getInstance () {
-        return new FractionMenu();
     }
 }

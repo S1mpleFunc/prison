@@ -6,24 +6,27 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import prison.PrisonMain;
 import prison.PrisonPlayer;
 import prison.PrisonUpgrade;
+import prison.PrisonVariables;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class UpgradeMenu {
 
-    ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE);
-    ItemStack star = new ItemStack(Material.NETHER_STAR);
-    ItemMeta starmeta = star.getItemMeta();
+    private ItemStack empty = new ItemStack(Material.STAINED_GLASS_PANE);
+    private ItemStack star = new ItemStack(Material.NETHER_STAR);
+    private ItemMeta starmeta = star.getItemMeta();
+    private PrisonUpgrade upgrade = new PrisonUpgrade();
 
     public void openPlayerGUI (Player p) {
-        if (PrisonMain.getInstance().getStats().containsKey(p.getUniqueId())) {
-            PrisonPlayer prisonPlayer = PrisonMain.getInstance().getStats().get(p.getUniqueId());
+        if (((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).containsKey(p.getUniqueId())) {
+            PrisonPlayer prisonPlayer = ((HashMap<UUID, PrisonPlayer>) PrisonVariables.PLAYER_STATS.getO()).get(p.getUniqueId());
 
             starmeta.setDisplayName("§b§lУлучшить");
-            starmeta.setLore(Arrays.asList("§f§lЦена: §6§l" + PrisonUpgrade.getInstance().getCost(p) + "$.",
+            starmeta.setLore(Arrays.asList("§f§lЦена: §6§l" + upgrade.getCost(p) + "$.",
                                            "§7У вас денег: " + prisonPlayer.getGold() + "$."));
             star.setItemMeta(starmeta);
 
@@ -39,15 +42,12 @@ public class UpgradeMenu {
             //Открытие игрока
             p.openInventory(i);
         } else
-            p.sendMessage(PrisonMain.getInstance().getErrorPrefix() + "Упс... Произошла ошибка номер 7, обратитесь к персоналу сообщив номер ошибки.");
+            p.sendMessage(PrisonVariables.ERROR.getO() + "Упс... Произошла ошибка номер 7, обратитесь к персоналу сообщив номер ошибки.");
     }
 
     public void menuHandler(Player p) {
         //Обработка возможных предметов
-        PrisonUpgrade.getInstance().upgradeItem(p, p.getItemInHand());
+        upgrade.upgradeItem(p, p.getItemInHand());
         p.closeInventory();
-    }
-    public static UpgradeMenu getInstance () {
-        return new UpgradeMenu();
     }
 }

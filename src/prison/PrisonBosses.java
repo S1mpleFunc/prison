@@ -1,16 +1,20 @@
 package prison;
 
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.*;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.LinkedList;
 
 
 public enum PrisonBosses {
 
-    SPIDER("§6§lМатка", new Location(PrisonMain.getInstance().getWorld(), 214, 40, 432), 200, 4, EntityType.SPIDER, 250, 60 * 20 * 20),
-    BLAZE("§c§lОгенные недра", new Location(PrisonMain.getInstance().getWorld(), 214, 40, 434), 500, 3, EntityType.BLAZE, 500, 60 * 20 * 35),
-    GOLEM("§f§lЖивое существо", new Location(PrisonMain.getInstance().getWorld(), 214, 40, 436), 1000, 6, EntityType.IRON_GOLEM, 750, 60 * 20 * 50),
-    ENDERMAN("§5§lТёмный трибунал", new Location(PrisonMain.getInstance().getWorld(), 214, 40, 438), 1500, 8, EntityType.ENDERMAN, 1000, 60 * 20 * 90)
+    SPIDER("§6§lМатка", new Location((World) PrisonVariables.WORLD.getO(), 214, 40, 432), 200, 4, EntityType.SPIDER, 250, 60 * 20 * 20),
+    BLAZE("§c§lОгенные недра", new Location((World) PrisonVariables.WORLD.getO(), 214, 40, 434), 500, 3, EntityType.BLAZE, 500, 60 * 20 * 35),
+    GOLEM("§f§lЖивое существо", new Location((World) PrisonVariables.WORLD.getO(), 214, 40, 436), 1000, 6, EntityType.IRON_GOLEM, 750, 60 * 20 * 50),
+    ENDERMAN("§5§lТёмный трибунал", new Location((World) PrisonVariables.WORLD.getO(), 214, 40, 438), 1500, 8, EntityType.ENDERMAN, 1000, 60 * 20 * 90)
     ,;
 
     private String name;
@@ -19,16 +23,16 @@ public enum PrisonBosses {
     private double damage;
     private EntityType entityType;
     private int reward;
-    private int respawn_time;
+    private int respawnTime;
 
-    PrisonBosses (String name, Location loc, int HP, double damage, EntityType entityType, int reward, int respawn_time) {
+    PrisonBosses (String name, Location loc, int HP, double damage, EntityType entityType, int reward, int respawnTime) {
         this.name = name;
         this.loc = loc;
         this.HP = HP;
         this.damage = damage;
         this.entityType = entityType;
         this.reward = reward;
-        this.respawn_time = respawn_time;
+        this.respawnTime = respawnTime;
     }
 
     public static void updeteBosses () {
@@ -36,16 +40,16 @@ public enum PrisonBosses {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (PrisonMain.getInstance().getBosses().size() > 4) return;
+                    if (((LinkedList<LivingEntity>)PrisonVariables.BOSSES.getO()).size() > 4) return;
 
-                    LivingEntity boss = (LivingEntity) PrisonMain.getInstance().getWorld().spawnEntity(prisonBosses.getLocation(), prisonBosses.getEntityType());
+                    LivingEntity boss = (LivingEntity) ((World) PrisonVariables.WORLD.getO()).spawnEntity(prisonBosses.getLocation(), prisonBosses.getEntityType());
                     boss.setCustomName(prisonBosses.getName() + " §lHP: §c§l " + prisonBosses.getHP());
                     boss.setMaxHealth(prisonBosses.getHP());
                     boss.setHealth(prisonBosses.getHP());
                     boss.setCustomNameVisible(true);
-                    PrisonMain.getInstance().getBosses().add(boss);
+                    ((LinkedList<LivingEntity>)PrisonVariables.BOSSES.getO()).add(boss);
                 }
-            }.runTaskTimer(PrisonMain.getInstance(), 15 * 20L, prisonBosses.getRespawn_time());
+            }.runTaskTimer(PrisonMain.getInstance(), 15 * 20L, prisonBosses.getRespawnTime());
         }
     }
 
@@ -76,8 +80,8 @@ public enum PrisonBosses {
         return HP;
     }
 
-    public int getRespawn_time() {
-        return respawn_time;
+    public int getRespawnTime() {
+        return respawnTime;
     }
 
     public Location getLocation() {

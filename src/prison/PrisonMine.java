@@ -3,11 +3,10 @@ package prison;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
 
 import java.util.Random;
 
@@ -22,10 +21,10 @@ public class PrisonMine {
     private int delay;
     private String types;
     private Material material;
+    private JavaPlugin plugin;
 
-    PrisonMain plugin = PrisonMain.getPlugin(PrisonMain.class);
 
-    public PrisonMine(String name, int mlevel, boolean pvp, int height, int diametr, int x, int y, int z, int delay, String types, Material material, int tpx, int tpy, int tpz) {
+    public PrisonMine(String name, int mlevel, boolean pvp, int height, int diametr, int x, int y, int z, int delay, String types, Material material, int tpx, int tpy, int tpz, PrisonMain prison) {
         this.name = name;
         this.material = material;
         this.mlevel = mlevel;
@@ -40,6 +39,7 @@ public class PrisonMine {
         this.tpx = tpx;
         this.tpy = tpy;
         this.tpz = tpz;
+        this.plugin = prison;
     }
     public void updateMine (PrisonMine mine) {
         new BukkitRunnable() {
@@ -48,15 +48,15 @@ public class PrisonMine {
 
                 Random random = new Random();
 
-                Location loc = new Location(PrisonMain.getInstance().getWorld(), mine.getX(), mine.getY(), mine.getZ());
+                Location loc = new Location( (World) PrisonVariables.WORLD.getO(), mine.getX(), mine.getY(), mine.getZ());
                 int diametr = mine.getDiametr();
-                Location endLoc = new Location(PrisonMain.getInstance().getWorld(), mine.getX() - diametr, mine.getY() - mine.getHeight(), mine.getZ() - diametr);
+                Location endLoc = new Location( (World) PrisonVariables.WORLD.getO(), mine.getX() - diametr, mine.getY() - mine.getHeight(), mine.getZ() - diametr);
 
                 for (Player p : Bukkit.getOnlinePlayers()) {
                     Location plyerLoc = p.getLocation();
                     if (plyerLoc.getX() - endLoc.getX() <  diametr && plyerLoc.getX() - loc.getX() <  diametr &&
                             plyerLoc.getY() - endLoc.getY() <  diametr && plyerLoc.getY() - loc.getY() <  diametr) {
-                        p.sendMessage(PrisonMain.getInstance().getInfoPrefix() + "Вы был перемещенны вверх.");
+                        p.sendMessage(PrisonVariables.INFO.getO() + "Вы был перемещенны вверх.");
                         plyerLoc.setY(loc.getY() + 1);
                         p.teleport(plyerLoc);
                     }
@@ -113,6 +113,6 @@ public class PrisonMine {
     }
 
     public Location getMineLocation() {
-        return new Location(PrisonMain.getInstance().getWorld(), this.tpx, this.tpy, this.tpz);
+        return new Location((World) PrisonVariables.WORLD.getO(), this.tpx, this.tpy, this.tpz);
     }
 }

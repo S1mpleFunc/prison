@@ -14,12 +14,6 @@ host: 'localhost'
 database: 'data'
 port: 3306
 
-# Messages Configuration
-
-info: '&7[&ai&7] '
-error: '&7[&c!&l&6*&7] '
-fatal_error: '&7[&c!&l&6**&7] '
-
 # Blocks
 
 prices:
